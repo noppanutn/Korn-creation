@@ -42,4 +42,5 @@
       session_start();
 
       echo "<h2 style='color:white;'>".$_SESSION['u_fullname']." , ".$_SESSION['u_username']."</h2>";
+      echo "hello";
      ?>
