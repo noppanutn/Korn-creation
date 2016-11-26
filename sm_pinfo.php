@@ -26,12 +26,12 @@
     <nav>
       <ul class="menu">
         <li><a href="index.html" class="home"><img src="images/home.jpg" alt=""></a></li>
-        <li><a href="registration.html">New Customer</a></li>
-        <li><a href="cus.html">Customization</a></li>
-        <li><a href="invoice.html">Invoice</a></li>
-        <li><a href="sd.html">Sales Data</a></li>
+        <li><a href="sm_cusreg.html">New Customer</a></li>
+        <li><a href="sm_customization.html">Customization</a></li>
+        <!--<li><a href="invoice.html">Invoice</a></li>-->
+        <li><a href="sm_salesdata.html">Sales Data</a></li>
         <li class="current"><a href="sm_pinfo.php">Salesman Personal Info</a></li>
-        <li><a href="index.html">Logout</a></li>
+        <li><a href="logout.php">Logout</a></li>
 
       </ul>
       <div class="clear"></div>
@@ -42,5 +42,5 @@
       session_start();
 
       echo "<h2 style='color:white;'>".$_SESSION['u_fullname']." , ".$_SESSION['u_username']."</h2>";
-      echo "hello";
+      echo "<br><h2 style='color:white;'>".$_SESSION['u_position']." , ".$_SESSION['u_pid']."</h2>";
      ?>

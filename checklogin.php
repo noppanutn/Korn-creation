@@ -29,6 +29,9 @@
       $_SESSION['u_id'] = $row['USER_ID'];
       $_SESSION['u_fullname'] = $row['USER_FNAME']." ".$row['USER_LNAME'];
       $_SESSION['u_username'] = $row['USER_USERNAME'];
+      $_SESSION['u_position'] = $row['USER_POSITION'];
+      $_SESSION['u_title'] = $row['USER_TITLE'];
+      $_SESSION['u_pid'] = $row['USER_PINCODE'];
 
       echo "<br>".$_SESSION['u_id'];
       echo "<br>".$_SESSION['u_fullname'];

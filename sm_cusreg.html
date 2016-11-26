@@ -27,11 +27,13 @@
     <nav>
       <ul class="menu">
         <li><a href="index.html" class="home"><img src="images/home.jpg" alt=""></a></li>
-        <li class="current"><a href="registration.html">New Customer</a></li>
-        <li><a href="about.html">Customization</a></li>
-        <li><a href="maintenance.html">Invoice</a></li>
-        <li><a href="repair.html">Sales Data</a></li>
-        <li><a href="price-list.html">Logout</a></li>
+        <li class="current"><a href="sm_cusreg.html">New Customer</a></li>
+        <li><a href="sm_customization.html">Customization</a></li>
+        <!--<li><a href="invoice.html">Invoice</a></li>-->
+        <li><a href="sm_salesdata.html">Sales Data</a></li>
+        <li><a href="sm_pinfo.php">Salesman Personal Info</a></li>
+        <li><a href="logout.php">Logout</a></li>
+
 
       </ul>
       <div class="clear"></div>
@@ -48,7 +50,7 @@
 <br>
 <body>
 <h3>CUSTOMER REGISTRATION FORM</h3><br>
-<form action="form.php" method="POST">
+<form action="add_customer.php" method="POST">
 
 <table align="center" cellpadding = "10">
 
@@ -73,7 +75,7 @@
 <td>DATE OF BIRTH</td>
 
 <td>
-<select name="Birthday_day" id="Birthday_Day">
+<select name="Birthday_Day" id="Birthday_Day">
 <option value="-1">Day:</option>
 <option value="1">1</option>
 <option value="2">2</option>
@@ -195,6 +197,7 @@ MS. <input type="radio" name="Title" value="MS." />
 </tr>
 
 <!----- Gender ----------------------------------------------------------->
+<!--
 <tr>
 <td>GENDER</td>
 <td>
@@ -202,7 +205,7 @@ Male <input type="radio" name="Gender" value="Male" />
 Female <input type="radio" name="Gender" value="Female" />
 </td>
 </tr>
-
+-->
 <!----- Address ---------------------------------------------------------->
 <tr>
 <td>ADDRESS <br /><br /><br /></td>
@@ -238,6 +241,7 @@ Female <input type="radio" name="Gender" value="Female" />
 
 
 <!----- Submit and Reset ------------------------------------------------->
+<input type="hidden" name="page" value="adduser">
 <tr>
 <td colspan="2" align="center">
 <input type="submit" value="Submit">
