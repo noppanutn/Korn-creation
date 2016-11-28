@@ -63,7 +63,7 @@
     $customerid = $_SESSION['customer_id'];
     $salesmanid = $_SESSION['u_id'];
     $q = "INSERT INTO car_order (CAR_ID,PRICE,EX_COLOR_ID,IN_COLOR_ID,WHEEL_ID,INSURANCE,dealDate,SALESMAN_ID,CUSTOMER_ID)
-    VALUES ($model,$total,$excolor,$incolor,$wheel,$insurance,$timesql,$salesmanid,$customerid)";
+    VALUES ($model,$total,$excolor,$incolor,$wheel,$insurance,'$timesql',$salesmanid,$customerid)";
     $result = $mysqli->query($q);
 
     unset($_SESSION['model']);
@@ -117,7 +117,7 @@
       </div>
 
       <div class="dropdown">
-        <img src='http://localhost/Korn-creation/images/customer.png' style='height:30px; padding:15px 0px 15px 20px;'>
+        <img src='images/customer.png' style='height:30px; padding:15px 0px 15px 20px;'>
         <button  class="dropbtn">
           <?php
             if(!isset($_SESSION['customer_id'])){ echo "no customer";}

@@ -52,13 +52,20 @@ require_once('connect.php');
       <div class="main_content">
         <h2>Sales Record</h2>
         <table class="add_table" align="center" cellpadding = "10">
+          <tr><th>Customer Name</th><th>Car Model</th><th>Price</th><th>Deal Date</th></tr>
         <?php
           $salesmanid = $_SESSION['u_id'];
-          $q = "SELECT * FROM car_order WHERE SALESMAN_ID = $salesmanid";
+          $q = "SELECT C.CUSTOMER_FNAME,C.CUSTOMER_LNAME,M.MODEL, O.PRICE, O.dealDate
+          FROM car_model as M, customer as C, car_order as O
+          WHERE O.SALESMAN_ID = $salesmanid
+          AND C.CUSTOMER_ID = O.CUSTOMER_ID
+          AND M.CAR_ID = O.CAR_ID";
           $result = $mysqli->query($q);
           while($row = $result->fetch_array()){
             //echo "something";
-            echo "<tr><td>".$row[1]." ".$row[2]." ".$row[3]." ".$row[4]."</td></tr>";
+            echo "<tr><td>".$row['CUSTOMER_FNAME']." ".$row['CUSTOMER_LNAME']."</td>
+            <td>".$row['MODEL']."</td><td>".number_format($row['PRICE'])."</td>
+            <td>".$row['dealDate']."</td></tr>";
           }
 
 

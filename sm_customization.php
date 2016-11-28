@@ -66,7 +66,7 @@ $(document).ready(function()
       </div>
 
       <div class="dropdown">
-        <img src='http://localhost/Korn-creation/images/customer.png' style='height:30px; padding:15px 0px 15px 20px;'>
+        <img src='images/customer.png' style='height:30px; padding:15px 0px 15px 20px;'>
         <button  class="dropbtn">
           <?php
             if(!isset($_SESSION['customer_id'])){ echo "no customer";}
