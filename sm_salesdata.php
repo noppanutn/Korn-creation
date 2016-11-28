@@ -45,4 +45,5 @@
 
       </ul>
       <div class="clear"></div>
+      <?php echo "something"; ?>
     </nav>
