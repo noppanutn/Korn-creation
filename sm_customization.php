@@ -73,6 +73,9 @@ $(document).ready(function()
             else{echo $_SESSION['customer_title']." ".$_SESSION['customer_fname']." ".$_SESSION['customer_lname'];}
           ?>
         </button>
+        <div class="dropdown-content">
+          <a href="sm_findcustomer.php">Change Customer</a>
+        </div>
 
       </div>
     </div>

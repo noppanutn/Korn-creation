@@ -47,7 +47,7 @@
     if(!$result){
       echo "INSERT failed. Error: ".$mysqli->error."<br>" ;
       //break;
-
+    }
     $q="SELECT * FROM customer WHERE CUSTOMER_FNAME='$firstname' AND CUSTOMER_LNAME='$lastname'";
     $result=$mysqli->query($q);
     $row=$result->fetch_array();
@@ -56,8 +56,10 @@
     $_SESSION['customer_fname']=$row[2];
     $_SESSION['customer_lname']=$row[3];
 
-    //echo $_SESSION['customer_id'];
-    }
+    echo $_SESSION['customer_id'];
+
+    
+    //unset $_POST['page'];
   }
 
   //header('Location: sm_customization.html');

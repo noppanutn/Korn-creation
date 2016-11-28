@@ -1,4 +1,6 @@
-<?php session_start() ?>
+<?php session_start();
+require_once('connect.php');
+ ?>
 <html lang="en">
 <head>
 <title>Korn Creation | Login</title>
@@ -41,9 +43,28 @@
         <li class="current"><a href="sm_salesdata.php">Sales Data</a></li>
         <li><a href="sm_pinfo.php">Salesman Personal Info</a></li>
         <li><a href="logout.php">Logout</a></li>
-
-
       </ul>
       <div class="clear"></div>
-      <?php echo "something"; ?>
     </nav>
+  </header>
+
+      <center>
+      <div class="main_content">
+        <h2>Sales Record</h2>
+        <table class="add_table" align="center" cellpadding = "10">
+        <?php
+          $salesmanid = $_SESSION['u_id'];
+          $q = "SELECT * FROM car_order WHERE SALESMAN_ID = $salesmanid";
+          $result = $mysqli->query($q);
+          while($row = $result->fetch_array()){
+            //echo "something";
+            echo "<tr><td>".$row[1]." ".$row[2]." ".$row[3]." ".$row[4]."</td></tr>";
+          }
+
+
+        ?>
+        </table>
+      </div>
+      </center>
+
+</body>
