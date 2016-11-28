@@ -1,4 +1,4 @@
-
+<?php session_start() ?>
 <html lang="en">
 <head>
 <title>Korn Creation | Login</title>
@@ -24,13 +24,21 @@
       <h1><a href="index.html"><img src="images/logo.png" alt=""></a></h1>
         <p>8901 SIIT, NFG Group <span>8 (800) 552 5975</span></p>
     </div>
+
+    <div class="staff">
+      <?php
+        if(isset($_SESSION['u_fullname'])){
+          echo "<h4>".$_SESSION['u_fullname']." , ".$_SESSION['u_username']."</h4>";
+        }
+       ?>
+    </div>
+
     <nav>
       <ul class="menu">
         <li><a href="index.html" class="home"><img src="images/home.jpg" alt=""></a></li>
-        <li class="current"><a href="sm_cusreg.html">New Customer</a></li>
-        <li><a href="sm_customization.html">Customization</a></li>
-        <!--<li><a href="invoice.html">Invoice</a></li>-->
-        <li><a href="sm_salesdata.html">Sales Data</a></li>
+        <li class="current"><a href="sm_cusreg.php">New Customer</a></li>
+        <li><a href="sm_customization.php">Customization</a></li>
+        <li><a href="sm_salesdata.php">Sales Data</a></li>
         <li><a href="sm_pinfo.php">Salesman Personal Info</a></li>
         <li><a href="logout.php">Logout</a></li>
 
@@ -52,7 +60,7 @@
 <h3>CUSTOMER REGISTRATION FORM</h3><br>
 <form action="add_customer.php" method="POST">
 
-<table align="center" cellpadding = "10">
+<table class="add_table" align="center" cellpadding = "10">
 
 <!----- First Name ---------------------------------------------------------->
 <tr>
