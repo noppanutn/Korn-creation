@@ -78,7 +78,7 @@ $(document).ready(function()
         <button  class="dropbtn">
           <?php
             if(!isset($_SESSION['customer_id'])){ echo "no customer";}
-            else{echo $_SESSION['customer_title']." ".$_SESSION['customer_fname']." ".$_SESSION['customer_lname'];}
+            else{echo "Customer: ".$_SESSION['customer_title']." ".$_SESSION['customer_fname']." ".$_SESSION['customer_lname'];}
           ?>
         </button>
         <div class="dropdown-content">
@@ -179,10 +179,10 @@ if($result=$mysqli->query($q)){
 
 <td><select id="soflow" name="insurance">
 <option value='0' selected >--Select a insurance--</option>
-<option value="1">Company A</option>
-<option value="2">Company B</option>
-<option value="3">Company C</option>
-<option value="4">Company D</option>
+<option value="Company A" >Company A</option>
+<option value="Company B" >Company B</option>
+<option value="Company C" >Company C</option>
+<option value="Company D" >Company D</option>
 
 </select></td>
 </tr>

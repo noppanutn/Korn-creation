@@ -28,7 +28,7 @@
         <li><a href="index.html" class="home"><img src="images/home.jpg" alt=""></a></li>
         <li><a href="about.html">About</a></li>
 
-        <li class="current"><a href="login.html">Login</a></li>
+        <li class="current"><a href="login.php">Login</a></li>
       </ul>
       <div class="clear"></div>
     </nav>

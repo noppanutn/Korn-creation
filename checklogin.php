@@ -10,7 +10,7 @@
   AND USER_PASSWD = '".$mysqli->real_escape_string($re_pass)."'
   ";//AND disable = 0; ";
 
-  echo $q;
+  //echo $q;
 
   $result = $mysqli->query($q);
   if($result)
@@ -50,6 +50,8 @@
       //echo json_encode(42);
       if($_SESSION['u_position']=="salesman"){
         header("Location: sm_pinfo.php");
+      } else {
+        echo "not a salesman";
       }
 
 

@@ -47,7 +47,7 @@ require_once('connect.php');
         <button  class="dropbtn">
           <?php
             if(!isset($_SESSION['customer_id'])){ echo "no customer";}
-            else{echo $_SESSION['customer_title']." ".$_SESSION['customer_fname']." ".$_SESSION['customer_lname'];}
+            else{echo "Customer: ".$_SESSION['customer_title']." ".$_SESSION['customer_fname']." ".$_SESSION['customer_lname'];}
           ?>
         </button>
       </div>
