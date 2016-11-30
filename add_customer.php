@@ -15,21 +15,15 @@
   $city = $_POST["City"];
   $zipcode = $_POST["Zip_Code"];
   $country = $_POST["Country"];
-  //$username = $_POST["username"];
-  //$passwd = $_POST["passwd"];
-  //$cpasswd = $_POST["cpasswd"];
-  //$usergroup = $_POST["usergroup"];
-  //$disabled = $_POST["disabled"];
   $page = $_POST['page'];
-  //$confirmation = $_POST['confirmation'];
 
   if($page=='adduser') {
     $q="INSERT INTO customer_address (ADDRESS,CITY,COUNTRY,ZIPCODE)
     VALUES ('$address','$city','$country','$zipcode')";
-    echo $q;
+    //echo $q;
     $result=$mysqli->query($q);
     if(!$result){
-      echo "INSERT failed. Error: ".$mysqli->error."<br>" ;
+      //echo "INSERT failed. Error: ".$mysqli->error."<br>" ;
       //break;
     }
 
@@ -42,10 +36,10 @@
     $q="INSERT INTO customer (CUSTOMER_TITLE,CUSTOMER_FNAME,CUSTOMER_LNAME,CUSTOMER_ADDRESS,CUSTOMER_EMAIL,CUSTOMER_PINCODE)
     VALUES ('$title','$firstname','$lastname','$addressid[0]','$email','$mobile')";
     //$q = strtolower($q);
-    echo $q;
+    //echo $q;
     $result=$mysqli->query($q);
     if(!$result){
-      echo "INSERT failed. Error: ".$mysqli->error."<br>" ;
+      $_SESSION['dup_cus'] = "<h2 style='color:white;'>Registration failed. Error: ".$mysqli->error."</h2><br>" ;
       //break;
     }
     $q="SELECT * FROM customer WHERE CUSTOMER_FNAME='$firstname' AND CUSTOMER_LNAME='$lastname'";
@@ -56,9 +50,9 @@
     $_SESSION['customer_fname']=$row[2];
     $_SESSION['customer_lname']=$row[3];
 
-    echo $_SESSION['customer_id'];
+    //echo $_SESSION['customer_id'];
 
-    
+
     //unset $_POST['page'];
   }
 
@@ -75,12 +69,6 @@
 <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300' rel='stylesheet' type='text/css'>
 <script src="js/jquery-1.7.min.js"></script>
 <script src="js/jquery.easing.1.3.js"></script>
-<!--[if lt IE 9]>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="js/html5.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="css/ie.css">
-<![endif]-->
 </head>
 
 
@@ -114,16 +102,23 @@
     </nav>
   </header>
   <style type="text/css">
-  h3{font-family: Calibri; font-size: 22pt; font-style: normal; font-weight: bold; color:red;
-  text-align: center; text-decoration: underline }
-  table{font-family: Calibri; color:white; font-size: 11pt; font-style: normal;
-  text-align:; background-color: gray; border-collapse: collapse; border: 2px solid navy}
-  table.inner{border: 0px}
+    h3{  font-size:35px; line-height:42px; color:red; font-weight:bold; font-family: 'Open Sans Condensed', sans-serif;
+    text-align: center; text-decoration: underline }
+
+    table{font-family: 'Open Sans Condensed', sans-serif; color:white; font-size: 11pt; font-style: normal; align:center; margin-left:auto; margin-right:auto; width:600px;
+    text-align:; background-color: #353535; border-collapse: collapse; border: 2px solid red}
+    table.inner{border: 0px}
   </style>
 
 <br>
 <body>
 <h3>CUSTOMER REGISTRATION CONFIRMATION</h3><br>
+<?php
+  if(isset($_SESSION['dup_cus'])){
+    echo "<center>".$_SESSION['dup_cus']."</center>";
+    unset($_SESSION['dup_cus']);
+  } else {
+?>
 <form action="add_customer.php" method="POST">
 
 <table class="add_table" align="center" cellpadding = "10">
@@ -199,6 +194,6 @@
 </table>
 
 </form>
-
+<?php } ?>
 </body>
 </html>

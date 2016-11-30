@@ -1,6 +1,12 @@
-
+<?php
+  session_start();
+  if(isset($_SESSION['u_fullname'])){
+    header("Location: sm_pinfo.php");
+  }
+?>
 <html lang="en">
 <head>
+  <link rel="icon" href="images/iconn.gif" >
 <title>Korn Creation | Login</title>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
@@ -8,13 +14,8 @@
 <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300' rel='stylesheet' type='text/css'>
 <script src="js/jquery-1.7.min.js"></script>
 <script src="js/jquery.easing.1.3.js"></script>
-<!--[if lt IE 9]>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="js/html5.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="css/ie.css">
-<![endif]-->
 </head>
+
 <body>
 <div class="bg">
   <header>
@@ -197,12 +198,19 @@ body, input, button {
     min-height: 0;
   }
 }
-</style></head><body>
+</style></head>
+
+<body>
   <div class="login">
   <div class="heading">
     <h2>Sign in</h2>
+    <?php
+      if(isset($_SESSION['message'])){
+        echo $_SESSION['message'];
+        unset ($_SESSION['message']);
+      }
+    ?>
     <form method="POST" action="checklogin.php">
-
       <div class="input-group input-group-lg">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
         <input type="text" class="form-control" name="username" placeholder="Username or email">
@@ -221,6 +229,6 @@ body, input, button {
 
 
 </body>
-<footer>Korn Creation &copy; 2045 | <a href="#">Privacy Policy</a> | Design by: <a href="http://www.templatemonster.com/">CSGOLOTTO.com</a></footer>
+<footer>Korn Creation &copy; 2045 | <a href="#">Privacy Policy</a> | Designed by: <a href="#">NFG.com</a></footer>
 
 </html>

@@ -1,21 +1,46 @@
-<?php session_start() ?>
+<?php session_start();
+require_once('connect.php');
+$uid = $_SESSION['u_id'];
+$q = "SELECT * FROM staff
+WHERE USER_ID = $uid";//AND disable = 0; ";
+
+//echo $q;
+
+$result = $mysqli->query($q);
+    $row = $result->fetch_array();
+    $_SESSION['u_id'] = $row['USER_ID'];
+    $_SESSION['u_fname'] = $row['USER_FNAME'];
+    $_SESSION['u_lname'] = $row['USER_LNAME'];
+    $_SESSION['u_fullname'] = $row['USER_FNAME']." ".$row['USER_LNAME'];
+    $_SESSION['u_username'] = $row['USER_USERNAME'];
+    $_SESSION['u_position'] = $row['USER_POSITION'];
+    $_SESSION['u_title'] = $row['USER_TITLE'];
+    $_SESSION['u_phone'] = $row['USER_PHONE'];
+    $_SESSION['u_email'] = $row['USER_EMAIL'];
+    $ad = $row['USER_ADDRESS'];
+
+    $q = "SELECT * FROM useraddress WHERE ADDRESS_ID = $ad";
+    $result = $mysqli->query($q);
+    $row = $result->fetch_array();
+    $_SESSION['u_ad'] = $row['ADDRESS']."<br>".$row['CITY']." , ".$row['COUNTRY']." , ".$row['ZIPCODE'];
+    $_SESSION['u_adid'] = $row['ADDRESS_ID'];
+    $_SESSION['u_address'] = $row['ADDRESS'];
+    $_SESSION['u_city'] = $row['CITY'];
+    $_SESSION['u_country'] = $row['COUNTRY'];
+    $_SESSION['u_zipcode'] = $row['ZIPCODE'];
+
+?>
 <html lang="en">
 <head>
-<title>Korn Creation | Login</title>
+  <link rel="icon" href="images/iconn.gif" />
+<title>Korn Creation | Personal Info</title>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
 <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300' rel='stylesheet' type='text/css'>
 <script src="js/jquery-1.7.min.js"></script>
 <script src="js/jquery.easing.1.3.js"></script>
-<!--[if lt IE 9]>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="js/html5.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="css/ie.css">
-<![endif]-->
 </head>
-
 
 <body>
 <div class="bg">
@@ -44,10 +69,34 @@
       </ul>
       <div class="clear"></div>
     </nav>
-  </header>
+  </header><br>
 
-    <?php
+  <section id="content">
+  <div class="sub-page">
+    <div class="sub-page-left1" style='width:880px !important;'>
+      <h2 class="p2">STAFF PROFILE</h2>
+      <div class="wrap"> <img src="images/page2-img4.jpg" alt="" class="img-indent">
+        <div class="extra-wrap">
+          <table class="add_table" align="center" cellpadding = "10">
+            <tr><td>NAME</td><td><?php echo $_SESSION['u_title']." ".$_SESSION['u_fullname']; ?></td></tr>
+            <tr><td>USERNAME</td><td><?php echo $_SESSION['u_username']; ?></td></tr>
+            <tr><td>PASSWORD</td><td><a href='#'>Change Password</a></td></tr>
+            <tr><td>POSITION</td><td><?php echo $_SESSION['u_position']; ?></td></tr>
+            <tr><td>PHONE NUMBER</td><td><?php echo $_SESSION['u_phone']; ?></td></tr>
+            <tr><td>ADDRESS</td><td><?php echo $_SESSION['u_ad']; ?></td></tr>
+          </table>
+          <br>
+          <div style='margin-left: 261;'><a href='edit_staff.php' class='button-2'>Edit Profile</a></div>
+        </div>
+      </div>
+      <h2 class="top-1 p3"></h2>
+      <p class="upper"></p>
 
-      echo "<h2 style='color:white;'>".$_SESSION['u_fullname']." , ".$_SESSION['u_username']."</h2>";
-      echo "<br><h2 style='color:white;'>".$_SESSION['u_position']." , ".$_SESSION['u_pid']."</h2>";
-     ?>
+    </div>
+  </div>
+  </div>
+  </section>
+
+
+</body>
+</html>

@@ -61,26 +61,26 @@
     $time = getdate();
     $timesql = $time['year']."-".$time['mon']."-".$time['mday'];
 
-    $customerid = $_SESSION['customer_id'];
-    $salesmanid = $_SESSION['u_id'];
-    $q = "INSERT INTO car_order (CAR_ID,PRICE,EX_COLOR_ID,IN_COLOR_ID,WHEEL_ID,INSURANCE,dealDate,SALESMAN_ID,CUSTOMER_ID)
-    VALUES ($model,$total,$excolor,$incolor,$wheel,$insurance,'$timesql',$salesmanid,$customerid)";
+    $orderid = $_SESSION['orderid'];
+    $q = "UPDATE car_order SET CAR_ID = $model, PRICE = $total
+    , EX_COLOR_ID = $excolor, IN_COLOR_ID = $incolor, WHEEL_ID = $wheel
+    , INSURANCE = '$insurance' WHERE CAR_ORDER_ID = $orderid";
+    echo $q;
+    //$q = "INSERT INTO car_order (CAR_ID,PRICE,EX_COLOR_ID,IN_COLOR_ID,WHEEL_ID,INSURANCE,dealDate,SALESMAN_ID,CUSTOMER_ID)
+    //VALUES ($model,$total,$excolor,$incolor,$wheel,$insurance,'$timesql',$salesmanid,$customerid)";
     $result = $mysqli->query($q);
 
     unset($_SESSION['model']);
-    echo "<a href='sm_customization.php'>GO</a>";
+    //echo "<a href='sm_customization.php'>GO</a>";
 
 
-  } else {
-    echo "select a customer";
-    header("Location: sm_findcustomer.php");
   }
 ?>
 
 <html lang="en">
 <head>
   <link rel="icon" href="images/iconn.gif" />
-<title>Korn Creation | Add Customer</title>
+<title>Korn Creation | Update Order</title>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
 <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">

@@ -1,19 +1,14 @@
 <?php session_start() ?>
 <html lang="en">
 <head>
-<title>Korn Creation | Login</title>
+  <link rel="icon" href="images/iconn.gif" />
+<title>Korn Creation | Add Customer</title>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
 <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300' rel='stylesheet' type='text/css'>
 <script src="js/jquery-1.7.min.js"></script>
 <script src="js/jquery.easing.1.3.js"></script>
-<!--[if lt IE 9]>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="js/html5.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="css/ie.css">
-<![endif]-->
 </head>
 
 
@@ -48,10 +43,11 @@
     </nav>
   </header>
   <style type="text/css">
-  h3{font-family: Calibri; font-size: 22pt; font-style: normal; font-weight: bold; color:red;
+  h3{  font-size:35px; line-height:42px; color:red; font-weight:bold; font-family: 'Open Sans Condensed', sans-serif;
   text-align: center; text-decoration: underline }
-  table{font-family: Calibri; color:white; font-size: 11pt; font-style: normal;
-  text-align:; background-color: gray; border-collapse: collapse; border: 2px solid navy}
+
+  table{font-family: 'Open Sans Condensed', sans-serif; color:white; font-size: 11pt; font-style: normal; align:center; margin-left:auto; margin-right:auto; width:600px;
+  text-align:; background-color: #353535; border-collapse: collapse; border: 2px solid red}
   table.inner{border: 0px}
   </style>
 
@@ -183,8 +179,8 @@
 <tr>
 <td>TITLE</td>
 <td>
-MR. <input type="radio" name="Title" value="MR." />
-MS. <input type="radio" name="Title" value="MS." />
+MR. <input type="radio" name="Title" value="Mr." />
+MS. <input type="radio" name="Title" value="Ms." />
 </td>
 </tr>
 
@@ -252,8 +248,8 @@ Female <input type="radio" name="Gender" value="Female" />
 <input type="hidden" name="page" value="adduser">
 <tr>
 <td colspan="2" align="center">
-<input type="submit" value="Submit">
-<input type="reset" value="Reset">
+  <input type="submit" class="button-2" value="Submit">
+  <input type="reset" class="button-2" value="Reset">
 </td>
 </tr>
 </table>

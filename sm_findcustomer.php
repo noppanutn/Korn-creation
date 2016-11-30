@@ -4,16 +4,15 @@ require_once('connect.php');
 ?>
 <html lang="en">
 <head>
-<title>Korn Creation | Login</title>
+  <link rel="icon" href="images/iconn.gif" />
+<title>Korn Creation | Customer</title>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
 <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300' rel='stylesheet' type='text/css'>
 <script src="js/jquery-1.7.min.js"></script>
 <script src="js/jquery.easing.1.3.js"></script>
-
 </head>
-
 
 <body>
 <div class="bg">
@@ -51,30 +50,36 @@ require_once('connect.php');
             else{echo $_SESSION['customer_title']." ".$_SESSION['customer_fname']." ".$_SESSION['customer_lname'];}
           ?>
         </button>
-
-
       </div>
     </div>
   </header>
+
   <center>
   <div class="main_content">
     <form action="sm_findcustomer.php" method="POST">
       <label>Customer Name</label>
-    <input type="input" name="cus_search">
-    <input type="submit" name="search" value="search">
-  </form>
+        <input type="input" name="cus_search">
+        <input type="submit" name="search" value="search">
+    </form>
+    <table class="add_table" align="center" cellpadding = "10">
+      <tr><th>Select Customer for Ordering</th><th>Edit Info</th></tr>
     <?php
       if(isset($_POST['cus_search'])){
-        $q="SELECT * FROM customer WHERE CUSTOMER_FNAME LIKE '%".$_POST['cus_search']."%'";
+        $q="SELECT * FROM customer WHERE CUSTOMER_FNAME LIKE '%".$_POST['cus_search']."%' ORDER BY CUSTOMER_FNAME,CUSTOMER_LNAME,CUSTOMER_TITLE";
         $result = $mysqli->query($q);
         echo "<form action='fetch_customer.php' method='POST'>";
         while($row=$result->fetch_array()){
-          $text=$row[0].' '.$row[1].' '.$row[2].' '.$row[3];
-          echo "<input type='submit' name='cus_info' value='".$text."'><br>";
+          $text=" ".$row[0]." ".$row[1].' '.$row[2].' '.$row[3];
+          echo "<input type=hidden name='test' value='".$row[0]."'>";
+          echo "<tr><td><input type='submit' name='cus' value='".$text."' style='background:none; cursor: pointer;'></td>
+          <td><a href = 'edit_cus.php?cusid=".$row[0]."'><img src='images/edit.png' height = '30px'></a></td></tr>";
         }
       }
-     ?>
+
+      $mysqli->close();
+    ?>
      </form>
+   </table>
   </div>
   </center>
 </body>

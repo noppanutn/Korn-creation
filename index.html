@@ -37,12 +37,27 @@ $(function () {
     }
 })
 </script>
-<!--[if lt IE 9]>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="js/html5.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="css/ie.css">
-<![endif]-->
+<script>
+    function reqListener () {
+      console.log(this.responseText);
+    }
+
+    var oReq = new XMLHttpRequest(); //New request object
+    oReq.onload = function() {
+        //This is where you handle what to do with the response.
+        //The actual data is found on this.responseText
+        //alert(this.responseText); //Will alert: 42
+        //document.write(this.responseText);
+        if(this.responseText!="")
+        {document.getElementById("login_button").innerHTML = this.responseText.slice(1,-1);}
+    };
+    oReq.open("get", "get-data.php", true);
+    //                               ^ Don't block the rest of the execution.
+    //                                 Don't wait until the request finishes to
+    //                                 continue.
+    oReq.send();
+</script>
+
 </head>
 <body>
 <div class="bg">
@@ -55,7 +70,7 @@ $(function () {
       <ul class="menu">
         <li class="current"><a href="index.html" class="home"><img src="images/home.jpg" alt=""></a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="login.html">Login</a></li>
+        <li><a href="login.php" id="login_button">Login</a></li>
       </ul>
       <div class="clear"></div>
     </nav>
