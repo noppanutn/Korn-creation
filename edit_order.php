@@ -94,6 +94,7 @@ $(document).ready(function()
   $q = "SELECT * FROM car_order WHERE CAR_ORDER_ID = $orderid";
   $result = $mysqli->query($q);
   $data = $result->fetch_array();
+  $_SESSION['cid']=$data['CUSTOMER_ID'];
   if($data['DEPOSIT_PAYMENT_STATUS']==Null){
 ?>
   <center>

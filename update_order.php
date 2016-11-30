@@ -15,10 +15,15 @@
   ." Wheel: ".$_SESSION['wheel']." Insurance: ".$_SESSION['insurance'];
   }
   //echo $_SESSION['customer_id'];
-  if(isset($_SESSION['customer_id'])){
+  //if(isset($_SESSION['customer_id'])){
 
-    echo $_SESSION['customer_title']." ".$_SESSION['customer_fname']." ".$_SESSION['customer_lname']." ";
-    echo $_SESSION['u_fullname'];
+    //echo $_SESSION['customer_title']." ".$_SESSION['customer_fname']." ".$_SESSION['customer_lname']." ";
+    //echo $_SESSION['u_fullname'];
+    $cid = $_SESSION['cid'];
+    $q="SELECT * FROM customer WHERE CUSTOMER_ID = $cid";
+    $result = $mysqli->query($q);
+    $customer = $result->fetch_array();
+
 
     $model = $_SESSION['model'];
     $q="SELECT * FROM car_model WHERE CAR_ID = $model";
@@ -73,8 +78,6 @@
     unset($_SESSION['model']);
     //echo "<a href='sm_customization.php'>GO</a>";
 
-
-  }
 ?>
 
 <html lang="en">
@@ -137,8 +140,8 @@
   <div class="main_content">
     <h2>Order Confirmation</h2>
     <table class="add_table" align="center" cellpadding = "10">
-      <tr><td>CUSTOMER FIRST NAME</td><td><?php echo $_SESSION['customer_fname']; ?></td></tr>
-      <tr><td>CUSTOMER LAST NAME</td><td><?php echo $_SESSION['customer_lname']; ?></td></tr>
+      <tr><td>CUSTOMER FIRST NAME</td><td><?php echo $customer['CUSTOMER_FNAME']; ?></td></tr>
+      <tr><td>CUSTOMER LAST NAME</td><td><?php echo $customer['CUSTOMER_FNAME']; ?></td></tr>
       <tr><td>STAFF NAME</td><td><?php echo $_SESSION['u_fullname']; ?></td></tr>
       <tr><td>CAR MODEL</td><td><?php echo $modelname; ?></td></tr>
       <tr><td>Deal Date</td><td><?php echo $timesql; ?></td></tr>
