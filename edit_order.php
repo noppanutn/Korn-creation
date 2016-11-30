@@ -216,10 +216,10 @@ if($result=$mysqli->query($q)){
 
 <td><select id="soflow" name="insurance">
 <option value='0' selected >--Select a insurance--</option>
-<option value="Company A" <?php if($data['INSURANCE']==1){echo "selected";} ?> >Company A</option>
-<option value="Company B" <?php if($data['INSURANCE']==2){echo "selected";} ?> >Company B</option>
-<option value="Company C" <?php if($data['INSURANCE']==3){echo "selected";} ?> >Company C</option>
-<option value="Company D" <?php if($data['INSURANCE']==4){echo "selected";} ?> >Company D</option>
+<option value="Company A" <?php if($data['INSURANCE']=='Company A'){echo "selected";} ?> >Company A</option>
+<option value="Company B" <?php if($data['INSURANCE']=='Company B'){echo "selected";} ?> >Company B</option>
+<option value="Company C" <?php if($data['INSURANCE']=='Company C'){echo "selected";} ?> >Company C</option>
+<option value="Company D" <?php if($data['INSURANCE']=='Company D'){echo "selected";} ?> >Company D</option>
 
 </select></td>
 </tr>

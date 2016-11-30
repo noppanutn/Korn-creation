@@ -1,8 +1,11 @@
 <?php
   session_start();
-  if(isset($_SESSION['u_fullname'])){
+  if(isset($_SESSION['u_position'])){
+  if($_SESSION['u_position']=="salesman"){
     header("Location: sm_pinfo.php");
-  }
+  } else if ($_SESSION['u_position']=="admin"){
+    header("Location: admin.php?page=edit");
+  }}
 ?>
 <html lang="en">
 <head>
