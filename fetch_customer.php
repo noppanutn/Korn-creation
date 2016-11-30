@@ -2,9 +2,9 @@
   require_once('connect.php');
   session_start();
   echo "something";
-  //echo $text=$_POST['cus_info'];
-  //$cus_id = explode(" ",$text)[1];
-  $cus_id=$_POST['test'];
+  echo $text=$_POST['cus_info'];
+  $cus_id = explode(" ",$text)[1];
+  //$cus_id=$_POST['cus_info'];
   echo $cus_id;
   echo "something";
   $q = "SELECT * FROM customer WHERE CUSTOMER_ID = '$cus_id'";

@@ -70,8 +70,8 @@ require_once('connect.php');
         echo "<form action='fetch_customer.php' method='POST'>";
         while($row=$result->fetch_array()){
           $text=" ".$row[0]." ".$row[1].' '.$row[2].' '.$row[3];
-          echo "<input type=hidden name='test' value='".$row[0]."'>";
-          echo "<tr><td><input type='submit' name='cus' value='".$text."' style='background:none; cursor: pointer;'></td>
+          //echo "<input type=hidden name='test' value='".$row[0]."'>";
+          echo "<tr><td><input type='submit' name='cus_info' value='".$text."' style='background:none; cursor: pointer;'></td>
           <td><a href = 'edit_cus.php?cusid=".$row[0]."'><img src='images/edit.png' height = '30px'></a></td></tr>";
         }
       }
