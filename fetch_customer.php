@@ -28,11 +28,11 @@
 
 
   //echo "<a href='check_customer.php'>GO</a>";
-/*
+
   if(isset($_SESSION['model'])){
     header("Location: check_customer.php");
   } else {
     header("Location: sm_customization.php");
-  }*/
+  }
 
  ?>
