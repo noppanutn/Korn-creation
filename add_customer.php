@@ -33,7 +33,7 @@
     $addressid=$result->fetch_array();
     //echo $addressid[0];
 
-    $q="INSERT INTO customer (CUSTOMER_TITLE,CUSTOMER_FNAME,CUSTOMER_LNAME,CUSTOMER_ADDRESS,CUSTOMER_EMAIL,CUSTOMER_PINCODE)
+    $q="INSERT INTO customer (CUSTOMER_TITLE,CUSTOMER_FNAME,CUSTOMER_LNAME,CUSTOMER_ADDRESS,CUSTOMER_EMAIL,CUSTOMER_PHONE)
     VALUES ('$title','$firstname','$lastname','$addressid[0]','$email','$mobile')";
     //$q = strtolower($q);
     //echo $q;
