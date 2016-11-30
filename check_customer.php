@@ -1,3 +1,4 @@
+
 <?php
   require_once('connect.php');
   session_start();
@@ -63,6 +64,9 @@
 
     $customerid = $_SESSION['customer_id'];
     $salesmanid = $_SESSION['u_id'];
+
+
+
     $q = "INSERT INTO car_order (CAR_ID,PRICE,EX_COLOR_ID,IN_COLOR_ID,WHEEL_ID,INSURANCE,dealDate,SALESMAN_ID,CUSTOMER_ID)
     VALUES ($model,$total,$excolor,$incolor,$wheel,'$insurance','$timesql',$salesmanid,$customerid)";
     $result = $mysqli->query($q);
@@ -152,6 +156,9 @@
       <tr><td>CAR Insurance</td><td><?php echo $insurance; ?></td></tr>
       <tr><td>Additional Charges</td><td>30%</td></tr>
       <tr><td>TOTAL PRICE</td><td><?php echo $total; ?></td></tr>
+
+
+      </form>
     </table>
   </div>
   </center>

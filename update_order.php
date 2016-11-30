@@ -9,6 +9,9 @@
   $_SESSION['ex_color'] = $_POST['ex_color'];
   $_SESSION['wheel'] = $_POST['wheel'];
   $_SESSION['insurance'] = $_POST['insurance'];
+  $_SESSION['Pay_Day'] = $_POST['Pay_Day'];
+  $_SESSION['Pay_Month'] = $_POST['Pay_Month'];
+  $_SESSION['Pay_Year'] = $_POST['Pay_Year'];
 
   echo "Model: ".$_SESSION['model']." In_color: ".$_SESSION['in_color']
   ." Ex_color: ".$_SESSION['ex_color']
@@ -66,10 +69,14 @@
     $time = getdate();
     $timesql = $time['year']."-".$time['mon']."-".$time['mday'];
 
+    $payday = $_SESSION['Pay_Day'];
+    $paymonth = $_SESSION['Pay_Month'];
+    $payyear = $_SESSION['Pay_Year'];
+
     $orderid = $_SESSION['orderid'];
     $q = "UPDATE car_order SET CAR_ID = $model, PRICE = $total
     , EX_COLOR_ID = $excolor, IN_COLOR_ID = $incolor, WHEEL_ID = $wheel
-    , INSURANCE = '$insurance' WHERE CAR_ORDER_ID = $orderid";
+    , INSURANCE = '$insurance', DEPOSIT_PAYMENT_STATUS = STR_TO_DATE('$payyear-$paymonth-$payday', '%Y-%m-%d') WHERE CAR_ORDER_ID = $orderid";
     echo $q;
     //$q = "INSERT INTO car_order (CAR_ID,PRICE,EX_COLOR_ID,IN_COLOR_ID,WHEEL_ID,INSURANCE,dealDate,SALESMAN_ID,CUSTOMER_ID)
     //VALUES ($model,$total,$excolor,$incolor,$wheel,$insurance,'$timesql',$salesmanid,$customerid)";

@@ -42,6 +42,7 @@
       $_SESSION['dup_cus'] = "<h2 style='color:white;'>Registration failed. Error: ".$mysqli->error."</h2><br>" ;
       //break;
     }
+
     $q="SELECT * FROM customer WHERE CUSTOMER_FNAME='$firstname' AND CUSTOMER_LNAME='$lastname'";
     $result=$mysqli->query($q);
     $row=$result->fetch_array();

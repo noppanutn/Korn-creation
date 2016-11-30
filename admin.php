@@ -1,4 +1,8 @@
-<?php session_start() ?>
+<?php
+  session_start();
+  require_once('connect.php');
+  $page = $_GET['page'];
+?>
 <html lang="en">
 <head>
   <link rel="icon" href="images/iconn.gif" />
@@ -31,10 +35,8 @@
     <nav>
       <ul class="menu">
         <li><a href="index.html" class="home"><img src="images/home.jpg" alt=""></a></li>
-        <li class="current"><a href="sm_cusreg.php">New Customer</a></li>
-        <li><a href="sm_customization.php">Customization</a></li>
-        <li><a href="sm_salesdata.php">Sales Data</a></li>
-        <li><a href="sm_pinfo.php">Salesman Personal Info</a></li>
+        <li <?php if($page=='add'){echo "class='current'";} ?>><a href="admin.php?page=add">Add Car</a></li>
+        <li <?php if($page=='edit'){echo "class='current'";} ?>><a href="admin.php?page=edit">Edit Car</a></li>
         <li><a href="logout.php">Logout</a></li>
 
 
@@ -53,8 +55,32 @@
 
 <br>
 <body>
-<h3>CUSTOMER REGISTRATION FORM</h3><br>
+<h3>Admin Page</h3><br>
+  <?php
+    $q = "SELECT * FROM car_model";
+    $result = $mysqli->query($q);
 
+    if($page=='add'){
+      //echo "<h2 style='color: white;'>Add</h2>";
+
+    } else if ($page=='edit'){
+      //echo "<h2 style='color: white;'>Edit</h2>";
+      echo '<div class="main_content"><table class="add_table" align="center" cellpadding = "10">
+        <tr><th>Car ID</th><th>manufacturer</th><th>Model</th><th>Price</th><th>Edit</th><th>Delete</th></tr>';
+      while($row=$result->fetch_array()){
+        echo "<tr><td>".$row['CAR_ID']."</td>
+        <td>".$row['MANUFACTURER']."</td>
+        <td>".$row['MODEL']."</td>
+        <td>".$row['PRICE']."</td>
+        <td><a href = 'edit_car.php?id=".$row['CAR_ID']."'><img src='images/edit.png' height = '30px'></a></td>
+        <td><a href = 'delete_car.php?id=".$row['CAR_ID']."'><img src='images/delete.png' height = '30px'></a></td></tr>";
+
+      }
+      echo "</div>";
+
+    }
+
+  ?>
 
 </body>
 </html>
