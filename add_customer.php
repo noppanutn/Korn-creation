@@ -1,22 +1,43 @@
 <?php
   session_start();
   require_once('connect.php');
-  if(isset($_POST['page'])) {
-  $title = $_POST["Title"];
-  $firstname = $_POST["First_Name"];
-  $lastname = $_POST["Last_Name"];
-  $bday = $_POST["Birthday_Day"];
-  $bmonth = $_POST["Birthday_Month"];
-  $byear = $_POST["Birthday_Year"];
-  //$gender = $_POST["gender"];
-  $email = $_POST["Email_Id"];
-  $mobile = $_POST["Mobile_Number"];
-  $address = $_POST["Address"];
-  $city = $_POST["City"];
-  $zipcode = $_POST["Zip_Code"];
-  $country = $_POST["Country"];
-  $page = $_POST['page'];
+  if(isset($_POST['confirm'])){
+    echo "add";
 
+    $q="SELECT COUNT(*) FROM customer_address";
+    $result=$mysqli->query($q);
+    $row=$result->fetch_array();
+    $count=$row[0];
+    $count=$count+1;
+    echo $count;
+
+    $q="INSERT INTO customer (CUSTOMER_TITLE,CUSTOMER_FNAME,CUSTOMER_LNAME,CUSTOMER_DOB,CUSTOMER_ADDRESS,CUSTOMER_EMAIL,CUSTOMER_PHONE)
+    VALUES ('".$_SESSION['c_title']."','".$_SESSION['c_fname']."','".$_SESSION['c_lname']."','"
+    .$_SESSION['c_byear']."-".$_SESSION['c_bmonth']."-".$_SESSION['c_bday']."',".$count.",'".$_SESSION['c_email']."','".$_SESSION['c_mobile']."')";
+    echo $q;
+    $result=$mysqli->query($q);
+    if(!$result){
+      $_SESSION['dup_cus'] = "<h2 style='color:white;'>Registration failed. Error: ".$mysqli->error."</h2><br>" ;
+      //break;
+    } else {
+      $q="INSERT INTO customer_address (ADDRESS,CITY,COUNTRY,ZIPCODE)
+      VALUES ('".$_SESSION['c_address']."','".$_SESSION['c_city']."','".$_SESSION['c_country']."','".$_SESSION['c_zipcode']."')";
+      echo $q;
+      $result=$mysqli->query($q);
+
+      $q="SELECT CUSTOMER_ID FROM customer WHERE CUSTOMER_FNAME='".$_SESSION['c_fname']."' AND CUSTOMER_LNAME='".$_SESSION['c_lname']."'";
+      $result=$mysqli->query($q);
+      $row=$result->fetch_array();
+      $_SESSION['customer_id']=$row[0];
+      $_SESSION['customer_title']=$_SESSION['c_title'];
+      $_SESSION['customer_fname']=$_SESSION['c_fname'];
+      $_SESSION['customer_lname']=$_SESSION['c_lname'];
+      echo $_SESSION['customer_id'];
+    }
+
+
+
+  /*
   if($page=='adduser') {
     $q="INSERT INTO customer_address (ADDRESS,CITY,COUNTRY,ZIPCODE)
     VALUES ('$address','$city','$country','$zipcode')";
@@ -42,6 +63,7 @@
       $_SESSION['dup_cus'] = "<h2 style='color:white;'>Registration failed. Error: ".$mysqli->error."</h2><br>" ;
       //break;
     }
+
     $q="SELECT * FROM customer WHERE CUSTOMER_FNAME='$firstname' AND CUSTOMER_LNAME='$lastname'";
     $result=$mysqli->query($q);
     $row=$result->fetch_array();
@@ -54,12 +76,12 @@
 
 
     //unset $_POST['page'];
-  }
+  }*/
 
   //header('Location: sm_customization.html');
 }
 ?>
-
+<!--
 <html lang="en">
 <head>
 <title>Korn Creation | Login</title>
@@ -81,7 +103,7 @@
     </div>
 
     <div class="staff">
-      <?php
+      <?php/*
         if(isset($_SESSION['u_fullname'])){
           echo "<h4>".$_SESSION['u_fullname']." , ".$_SESSION['u_username']."</h4>";
         }
@@ -119,81 +141,23 @@
     unset($_SESSION['dup_cus']);
   } else {
 ?>
+
 <form action="add_customer.php" method="POST">
-
 <table class="add_table" align="center" cellpadding = "10">
-
-  <!----- First Name ---------------------------------------------------------->
-  <tr>
-  <td>FIRST NAME</td>
-  <td><?php echo $firstname; ?></td>
-  </tr>
-
-  <!----- Last Name ---------------------------------------------------------->
-  <tr>
-  <td>LAST NAME</td>
-  <td><?php echo $lastname; ?></td>
-  </tr>
-
-  <!----- Date Of Birth -------------------------------------------------------->
-  <tr>
-  <td>DATE OF BIRTH</td>
-
-  <td><?php echo $bday." ".$bmonth." ".$byear; ?></td>
-
-  <!---title-->
-  <tr>
-  <td>TITLE</td>
-  <td>
-  <?php echo $title; ?>
-  </td>
-  </tr>
-
-
-  <!----- Email Id ---------------------------------------------------------->
-  <tr>
-  <td>EMAIL Address</td>
-  <td><?php echo $email; ?></td>
-  </tr>
-
-  <!----- Mobile Number ---------------------------------------------------------->
-  <tr>
-  <td>MOBILE NUMBER</td>
-  <td>
-  <?php echo $mobile; ?>
-  </td>
-  </tr>
-
-  <!----- Address ---------------------------------------------------------->
-  <tr>
-  <td>ADDRESS <br /><br /><br /></td>
-  <td><?php echo $address; ?></td>
-  </tr>
-
-  <!----- City ---------------------------------------------------------->
-  <tr>
-  <td>CITY</td>
-  <td><?php echo $city; ?>
-  </td>
-  </tr>
-
-  <!----- Pin Code ---------------------------------------------------------->
-  <tr>
-  <td>ZIP CODE</td>
-  <td><?php echo $zipcode; ?>
-  </td>
-  </tr>
-
-  <!----- State ---------------------------------------------------------->
-  <tr>
-  <td>COUNTRY</td>
-  <td><?php echo $country; ?>
-  </td>
-  </tr>
-
+<tr><td>FIRST NAME</td><td><?php echo $_SESSION['c_fname']; ?></td></tr>
+<tr><td>LAST NAME</td><td><?php echo $_SESSION['c_lname']; ?></td></tr>
+<tr><td>DATE OF BIRTH</td><td><?php echo $_SESSION['c_byear']."-".$_SESSION['c_bmonth']."-".$_SESSION['c_bday']; ?></td>
+<tr><td>TITLE</td><td><?php echo $_SESSION['c_title']; ?></td></tr>
+<tr><td>EMAIL Address</td><td><?php echo $_SESSION['c_email']; ?></td></tr>
+<tr><td>MOBILE NUMBER</td><td><?php echo $_SESSION['c_mobile']; ?></td></tr>
+<tr><td>ADDRESS <br /><br /><br /></td><td><?php echo $_SESSION['c_address']; ?></td></tr>
+<tr><td>CITY</td><td><?php echo $_SESSION['c_city']; ?></td></tr>
+<tr><td>ZIP CODE</td><td><?php echo $_SESSION['c_zipcode']; ?></td></tr>
+<tr><td>COUNTRY</td><td><?php echo $_SESSION['c_country']; ?></td></tr>
+<tr><td colspan="2" align="center"><input class="button-2" type="submit" name="confirm" value="confirm"></td></tr>
 </table>
-
 </form>
-<?php } ?>
+<?php } ?>*/
 </body>
 </html>
+-->

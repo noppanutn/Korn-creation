@@ -25,7 +25,7 @@ require_once('connect.php');
     <div class="staff">
       <?php
         if(isset($_SESSION['u_fullname'])){
-          echo "<h3 style='color:white;'>".$_SESSION['u_fullname']." , ".$_SESSION['u_username']."</h3>";
+          echo "<h3 style='color:white;'>".$_SESSION['u_fullname']." , ".$_SESSION['u_position']."</h3>";
         }
        ?>
     </div>
@@ -35,7 +35,7 @@ require_once('connect.php');
         <ul class="menu">
           <li><a href="index.html" class="home"><img src="images/home.jpg" alt=""></a></li>
           <li><a href="sm_cusreg.php">New Customer</a></li>
-          <li class="current"><a href="sm_customization.php">Customization</a></li>
+          <li><a href="sm_customization.php">Customization</a></li>
           <li><a href="sm_salesdata.php">Sales Data</a></li>
           <li><a href="sm_pinfo.php">Salesman Personal Info</a></li>
           <li><a href="logout.php">Logout</a></li>
@@ -57,22 +57,25 @@ require_once('connect.php');
   <center>
   <div class="main_content">
     <form action="sm_findcustomer.php" method="POST">
-      <label>Customer Name</label>
+      <h2 style="color:white; text-align:center;">Customer Name</h2>
         <input type="input" name="cus_search">
         <input type="submit" name="search" value="search">
     </form>
-    <table class="add_table" align="center" cellpadding = "10">
-      <tr><th>Select Customer for Ordering</th><th>Edit Info</th></tr>
+    <table class="add_table" align="center" cellpadding = "10" style="font-size: 16px !important;">
+      <tr><th style='width:30 !important;'>No.</th><th>Select Customer for Ordering</th><th>See profile</th><th>Edit Info</th></tr>
     <?php
       if(isset($_POST['cus_search'])){
         $q="SELECT * FROM customer WHERE CUSTOMER_FNAME LIKE '%".$_POST['cus_search']."%' ORDER BY CUSTOMER_FNAME,CUSTOMER_LNAME,CUSTOMER_TITLE";
         $result = $mysqli->query($q);
         echo "<form action='fetch_customer.php' method='POST'>";
+        $i=1;
         while($row=$result->fetch_array()){
-          $text=" ".$row[0]." ".$row[1].' '.$row[2].' '.$row[3];
-          //echo "<input type=hidden name='test' value='".$row[0]."'>";
-          echo "<tr><td><input type='submit' name='cus_info' value='".$text."' style='background:none; cursor: pointer;'></td>
+          echo
+          "<tr><td>$i</td><td><a href = 'fetch_customer.php?cusid=".$row[0]."'
+          style='text-decoration:none; color:black;'>".$row[2]." ".$row[3]."</a></td>
+          <td><a href = 'cus_info.php?cusid=".$row[0]."'><img src='images/customer.png' height = '30px'></a></td>
           <td><a href = 'edit_cus.php?cusid=".$row[0]."'><img src='images/edit.png' height = '30px'></a></td></tr>";
+          $i=$i+1;
         }
       }
 

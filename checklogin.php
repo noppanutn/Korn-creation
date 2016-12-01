@@ -52,8 +52,10 @@
         header("Location: sm_pinfo.php");
       } else if ($_SESSION['u_position']=="admin") {
         header("Location: admin.php?page=edit");
-      } else {
-        echo "not a salesman";
+      } else if ($_SESSION['u_position']=="accountant"){
+        header("Location: sm_salesdata.php");
+      } else if ($_SESSION['u_position']=="delivery man"){
+        header("Location: delivery.php");
       }
 
 

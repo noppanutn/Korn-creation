@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once('connect.php');
+unset($_SESSION['model']);
 ?>
 <html lang="en">
 <head>
@@ -56,7 +57,7 @@ $(document).ready(function()
     <div class="staff">
       <?php
         if(isset($_SESSION['u_fullname'])){
-          echo "<h4 style='color:white;'>".$_SESSION['u_fullname']." , ".$_SESSION['u_username']."</h4>";
+          echo "<h4 style='color:white;'>".$_SESSION['u_fullname']." , ".$_SESSION['u_position']."</h4>";
         }
        ?>
     </div>
@@ -96,7 +97,6 @@ $(document).ready(function()
         <br>
         <h3>CAR CUSTOMIZATION</h3><br><tr>
         <td>Car Manufacturer</td>
-
         <td><select id="soflow" name="manufacturer" class="manufacturer">
           <option value='0'>Select Car Manufacturer</option>
           <?php
@@ -108,93 +108,85 @@ $(document).ready(function()
             }
           ?>
         </select></td>
-      </tr>
-      <tr>
-      <td>Car Model</td>
+        </tr>
+        <tr>
+          <td>Car Model</td>
+          <td><select  id="soflow" name="model" class="model">
+            <option value='0' selected>--Select a car model--</option>
+          </select></td>
+        </tr>
 
-      <td><select  id="soflow" name="model" class="model">
-  <option value='0' selected>--Select a car model--</option>
-</select></td>
-</tr>
+        <tr>
+          <td>Interior Color</td>
+          <td><select  id="soflow" name="in_color" >
+            <option value='0' selected>--Select a interior Color--</option>
+            <?php
+            $q='select * from in_color;';
+            if($result=$mysqli->query($q)){
+              while($row=$result->fetch_array()){
+                echo '<option value="'.$row[0].'">'.$row[1].'</option>';
+              }
+            }else{
+              echo 'Query error: '.$mysqli->error;
+            }
+            ?>
+          </select></td>
+        </tr>
 
-<tr>
-<td>Interior Color</td>
-<td><select  id="soflow" name="in_color" >
-<option value='0' selected>--Select a interior Color--</option>
+        <tr>
+          <td>Exterior Color</td>
+          <td><select id="soflow" name="ex_color">
+            <option value='0' selected>--Select a exterior Color--</option>
+            <?php
+            $q='select * from ex_color;';
+            if($result=$mysqli->query($q)){
+              while($row=$result->fetch_array()){
+                echo '<option value="'.$row[0].'">'.$row[1].'</option>';
+              }
+            }else{
+              echo 'Query error: '.$mysqli->error;
+            }
+            ?>
+          </select></td>
+        </tr>
 
-<?php
-$q='select * from in_color;';
-//$q = strtolower($q);
-if($result=$mysqli->query($q)){
-  while($row=$result->fetch_array()){
-    echo '<option value="'.$row[0].'">'.$row[1].'</option>';
-  }
-}else{
-  echo 'Query error: '.$mysqli->error;
-}
-?>
-</select></td>
-</tr>
+        <tr>
+          <td>Wheel</td>
+          <td><select id="soflow" name="wheel">
+            <option value='0' selected>--Select a exterior Color--</option>
+            <?php
+            $q='select * from wheel;';
+            if($result=$mysqli->query($q)){
+              while($row=$result->fetch_array()){
+                echo '<option value="'.$row[0].'">'.$row[1].'</option>';
+              }
+            }else{
+              echo 'Query error: '.$mysqli->error;
+            }
+            ?>
+          </select></td>
+        </tr>
 
-<tr>
-<td>Exterior Color</td>
+        <tr>
+          <td>Insurance</td>
+          <td><select id="soflow" name="insurance">
+            <option value='0' selected >--Select a insurance--</option>
+            <option value="Company A" >Company A</option>
+            <option value="Company B" >Company B</option>
+            <option value="Company C" >Company C</option>
+            <option value="Company D" >Company D</option>
+          </select></td>
+        </tr>
 
-<td><select id="soflow" name="ex_color">
-<option value='0' selected>--Select a exterior Color--</option>
-<?php
-  $q='select * from ex_color;';
-  //$q = strtolower($q);
-  if($result=$mysqli->query($q)){
-    while($row=$result->fetch_array()){
-      echo '<option value="'.$row[0].'">'.$row[1].'</option>';
-    }
-  }else{
-    echo 'Query error: '.$mysqli->error;
-  }
-?>
-</select></td>
-</tr>
+        <tr>
+          <td colspan="2" align="center">
+            <input type="submit" class="button-2" name="order" value="Order">
+          </td>
+        </tr>
 
-<tr>
-<td>Wheel</td>
-<td><select id="soflow" name="wheel">
-
-<option value='0' selected>--Select a exterior Color--</option>
-<?php
-$q='select * from wheel;';
-//$q = strtolower($q);
-if($result=$mysqli->query($q)){
-  while($row=$result->fetch_array()){
-    echo '<option value="'.$row[0].'">'.$row[1].'</option>';
-  }
-}else{
-  echo 'Query error: '.$mysqli->error;
-}
-?>
-</select></td>
-</tr>
-
-<tr>
-<td>Insurance</td>
-
-<td><select id="soflow" name="insurance">
-<option value='0' selected >--Select a insurance--</option>
-<option value="Company A" >Company A</option>
-<option value="Company B" >Company B</option>
-<option value="Company C" >Company C</option>
-<option value="Company D" >Company D</option>
-
-</select></td>
-</tr>
-<tr>
-<td colspan="2" align="center">
-<input type="submit" class="button-2" name="order" value="Order">
-</td>
-</tr>
-</table>
-</form>
+      </table>
+    </form>
 </div>
 </center>
 </body>
-<br>
 </html>

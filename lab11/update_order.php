@@ -1,99 +1,89 @@
 <?php
   require_once('connect.php');
   session_start();
-
-  if($_POST['page']=="order"){
+//echo "model: ".$_POST['model'];
+  //$_SESSION['manufacturer'] = $_POST['manufacturer'];
+  if(!isset($_SESSION['model'])){
   $_SESSION['model'] = $_POST['model'];
   $_SESSION['in_color'] = $_POST['in_color'];
   $_SESSION['ex_color'] = $_POST['ex_color'];
   $_SESSION['wheel'] = $_POST['wheel'];
   $_SESSION['insurance'] = $_POST['insurance'];
+  $_SESSION['Pay_Day'] = $_POST['Pay_Day'];
+  $_SESSION['Pay_Month'] = $_POST['Pay_Month'];
+  $_SESSION['Pay_Year'] = $_POST['Pay_Year'];
 
   echo "Model: ".$_SESSION['model']." In_color: ".$_SESSION['in_color']
   ." Ex_color: ".$_SESSION['ex_color']
   ." Wheel: ".$_SESSION['wheel']." Insurance: ".$_SESSION['insurance'];
+  }
+  //echo $_SESSION['customer_id'];
+  //if(isset($_SESSION['customer_id'])){
 
-  $cid = $_SESSION['cid'];
-  $q="SELECT * FROM customer WHERE CUSTOMER_ID = $cid";
-  $result = $mysqli->query($q);
-  $customer = $result->fetch_array();
-
-  $model = $_SESSION['model'];
-  $q="SELECT * FROM car_model WHERE CAR_ID = $model";
-  $result = $mysqli->query($q);
-  $row = $result->fetch_array();
-  $price1 = $row[3];
-  $modelname = $row[2];
-  $manufacturername = $row[1];
-  echo " ".$price1;
-
-  $incolor = $_SESSION['in_color'];
-  $q="SELECT * FROM in_color WHERE IN_COLOR_ID = $incolor";
-  $result = $mysqli->query($q);
-  $row = $result->fetch_array();
-  $price2 = $row[2];
-  $incolorname = $row[1];
-  echo " ".$price2;
-
-  $excolor = $_SESSION['ex_color'];
-  $q="SELECT * FROM ex_color WHERE EX_COLOR_ID = $excolor";
-  $result = $mysqli->query($q);
-  $row = $result->fetch_array();
-  $price3 = $row[2];
-  $excolorname = $row[1];
-  echo " ".$price3;
-
-  $wheel = $_SESSION['wheel'];
-  $q="SELECT * FROM wheel WHERE WHEEL_ID = $wheel";
-  $result = $mysqli->query($q);
-  $row = $result->fetch_array();
-  $price4 = $row[2];
-  $wheelname = $row[1];
-  echo " ".$price4;
-  $sum = ($price1+$price2+$price3+$price4);
-  $total = $sum*1.3;
-  echo " sum: ".$sum;
-  echo " plus service charge 30%: ".$total;
-
-  $insurance = $_SESSION['insurance'];
-  date_default_timezone_set("Asia/Bangkok");
-  $time = getdate();
-  $timesql = $time['year']."-".$time['mon']."-".$time['mday'];
-
-  $orderid = $_SESSION['orderid'];
-  $q = "UPDATE car_order SET CAR_ID = $model, PRICE = $total
-  , EX_COLOR_ID = $excolor, IN_COLOR_ID = $incolor, WHEEL_ID = $wheel
-  , INSURANCE = '$insurance'	WHERE CAR_ORDER_ID = $orderid";
-  echo $q;
-  $result = $mysqli->query($q);
-
-  unset($_SESSION['model']);
+    //echo $_SESSION['customer_title']." ".$_SESSION['customer_fname']." ".$_SESSION['customer_lname']." ";
+    //echo $_SESSION['u_fullname'];
+    $cid = $_SESSION['cid'];
+    $q="SELECT * FROM customer WHERE CUSTOMER_ID = $cid";
+    $result = $mysqli->query($q);
+    $customer = $result->fetch_array();
 
 
-} else if ($_POST['page']=="payment") {
-  $_SESSION['Pay_Day'] = $_POST['Pay_Day'];
-  $_SESSION['Pay_Month'] = $_POST['Pay_Month'];
-  $_SESSION['Pay_Year'] = $_POST['Pay_Year'];
-  $payday = $_SESSION['Pay_Day'];
-  $paymonth = $_SESSION['Pay_Month'];
-  $payyear = $_SESSION['Pay_Year'];
-  $date=$payyear."-".$paymonth."-".$payday;
-  $orderid = $_SESSION['orderid'];
-  $q = "UPDATE car_order SET DEPOSIT_PAYMENT_STATUS = STR_TO_DATE('$payyear-$paymonth-$payday', '%Y-%m-%d')
-  WHERE CAR_ORDER_ID = $orderid";
-  echo $q;
-  $result = $mysqli->query($q);
-  header('Location: sm_salesdata.php');
-} else if ($_POST['page']=="shipping"){
-  $_SESSION['Agree'] = $_POST['Agree'];
-  $shipping = $_SESSION['Agree'];
-  $orderid = $_SESSION['orderid'];
-  $q = "UPDATE car_order SET DELIVERY_STATUS = '$shipping'
-  WHERE CAR_ORDER_ID = $orderid";
-  echo $q;
-  $result = $mysqli->query($q);
-  header('Location: sm_salesdata.php');
-}
+    $model = $_SESSION['model'];
+    $q="SELECT * FROM car_model WHERE CAR_ID = $model";
+    $result = $mysqli->query($q);
+    $row = $result->fetch_array();
+    $price1 = $row[3];
+    $modelname = $row[2];
+    echo " ".$price1;
+
+    $incolor = $_SESSION['in_color'];
+    $q="SELECT * FROM in_color WHERE IN_COLOR_ID = $incolor";
+    $result = $mysqli->query($q);
+    $row = $result->fetch_array();
+    $price2 = $row[2];
+    $incolorname = $row[1];
+    echo " ".$price2;
+
+    $excolor = $_SESSION['ex_color'];
+    $q="SELECT * FROM ex_color WHERE EX_COLOR_ID = $excolor";
+    $result = $mysqli->query($q);
+    $row = $result->fetch_array();
+    $price3 = $row[2];
+    $excolorname = $row[1];
+    echo " ".$price3;
+
+    $wheel = $_SESSION['wheel'];
+    $q="SELECT * FROM wheel WHERE WHEEL_ID = $wheel";
+    $result = $mysqli->query($q);
+    $row = $result->fetch_array();
+    $price4 = $row[2];
+    $wheelname = $row[1];
+    echo " ".$price4;
+    $sum = ($price1+$price2+$price3+$price4);
+    $total = $sum*1.3;
+    echo " sum: ".$sum;
+    echo " plus service charge 30%: ".$total;
+
+    $insurance = $_SESSION['insurance'];
+    date_default_timezone_set("Asia/Bangkok");
+    $time = getdate();
+    $timesql = $time['year']."-".$time['mon']."-".$time['mday'];
+
+    $payday = $_SESSION['Pay_Day'];
+    $paymonth = $_SESSION['Pay_Month'];
+    $payyear = $_SESSION['Pay_Year'];
+
+    $orderid = $_SESSION['orderid'];
+    $q = "UPDATE car_order SET CAR_ID = $model, PRICE = $total
+    , EX_COLOR_ID = $excolor, IN_COLOR_ID = $incolor, WHEEL_ID = $wheel
+    , INSURANCE = '$insurance', DEPOSIT_PAYMENT_STATUS = STR_TO_DATE('$payyear-$paymonth-$payday', '%Y-%m-%d') WHERE CAR_ORDER_ID = $orderid";
+    echo $q;
+    //$q = "INSERT INTO car_order (CAR_ID,PRICE,EX_COLOR_ID,IN_COLOR_ID,WHEEL_ID,INSURANCE,dealDate,SALESMAN_ID,CUSTOMER_ID)
+    //VALUES ($model,$total,$excolor,$incolor,$wheel,$insurance,'$timesql',$salesmanid,$customerid)";
+    $result = $mysqli->query($q);
+
+    unset($_SESSION['model']);
+    //echo "<a href='sm_customization.php'>GO</a>";
 
 ?>
 
@@ -121,7 +111,7 @@
     <div class="staff">
       <?php
         if(isset($_SESSION['u_fullname'])){
-          echo "<h3 style='color:white;'>".$_SESSION['u_fullname']." , ".$_SESSION['u_position']."</h3>";
+          echo "<h3 style='color:white;'>".$_SESSION['u_fullname']." , ".$_SESSION['u_username']."</h3>";
         }
        ?>
     </div>
@@ -155,18 +145,13 @@
 
   <center>
   <div class="main_content">
-    <br><h2>Changed Order Confirmation</h2><br>
+    <h2>Order Confirmation</h2>
     <table class="add_table" align="center" cellpadding = "10">
       <tr><td>CUSTOMER FIRST NAME</td><td><?php echo $customer['CUSTOMER_FNAME']; ?></td></tr>
-      <tr><td>CUSTOMER LAST NAME</td><td><?php echo $customer['CUSTOMER_LNAME']; ?></td></tr>
+      <tr><td>CUSTOMER LAST NAME</td><td><?php echo $customer['CUSTOMER_FNAME']; ?></td></tr>
       <tr><td>STAFF NAME</td><td><?php echo $_SESSION['u_fullname']; ?></td></tr>
-      <tr><td>CAR MANUFACTURER</td><td><?php echo $manufacturername; ?></td></tr>
       <tr><td>CAR MODEL</td><td><?php echo $modelname; ?></td></tr>
       <tr><td>Deal Date</td><td><?php echo $timesql; ?></td></tr>
-      <!--
-	  <tr><td>Payment Status</td><td><?php echo $payyear."-".$paymonth."-".$payday; ?></td></tr>
-	  <tr><td>Shipping Status</td><td><?php echo $shipping; ?></td></tr>
-  -->
       <tr><td>MODEL PRICE</td><td><?php echo $price1; ?></td></tr>
       <tr><td>CAR Interior Color</td><td><?php echo $incolorname; ?></td></tr>
       <tr><td>Interior Color PRICE</td><td><?php echo $price2; ?></td></tr>

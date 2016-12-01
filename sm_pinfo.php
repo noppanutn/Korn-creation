@@ -53,22 +53,37 @@ $result = $mysqli->query($q);
     <div class="staff">
       <?php
         if(isset($_SESSION['u_fullname'])){
-          echo "<h3 style='color:white;'>".$_SESSION['u_fullname']." , ".$_SESSION['u_username']."</h3>";
+          echo "<h3 style='color:white;'>".$_SESSION['u_fullname']." , ".$_SESSION['u_position']."</h3>";
         }
        ?>
     </div>
 
-    <nav>
-      <ul class="menu">
-        <li><a href="index.html" class="home"><img src="images/home.jpg" alt=""></a></li>
-        <li><a href="sm_cusreg.php">New Customer</a></li>
-        <li><a href="sm_customization.php">Customization</a></li>
-        <li><a href="sm_salesdata.php">Sales Data</a></li>
-        <li class="current"><a href="sm_pinfo.php">Salesman Personal Info</a></li>
-        <li><a href="logout.php">Logout</a></li>
-      </ul>
-      <div class="clear"></div>
-    </nav>
+    <div class="main_header">
+      <div id="div_menu">
+        <ul class="menu">
+          <li><a href="index.html" class="home"><img src="images/home.jpg" alt=""></a></li>
+          <li><a href="sm_cusreg.php">New Customer</a></li>
+          <li><a href="sm_customization.php">Customization</a></li>
+          <li><a href="sm_salesdata.php">Sales Data</a></li>
+          <li class="current"><a href="sm_pinfo.php">Salesman Personal Info</a></li>
+          <li><a href="logout.php">Logout</a></li>
+        </ul>
+      </div>
+
+      <div class="dropdown">
+        <img src='images/customer.png' style='height:30px; padding:15px 0px 15px 20px;'>
+        <button  class="dropbtn">
+          <?php
+            if(!isset($_SESSION['customer_id'])){ echo "no customer";}
+            else{echo "Customer: ".$_SESSION['customer_title']." ".$_SESSION['customer_fname']." ".$_SESSION['customer_lname'];}
+          ?>
+        </button>
+        <div class="dropdown-content">
+          <a href="sm_findcustomer.php">Select Customer</a>
+        </div>
+
+      </div>
+    </div>
   </header><br>
 
   <section id="content">
@@ -80,7 +95,6 @@ $result = $mysqli->query($q);
           <table class="add_table" align="center" cellpadding = "10">
             <tr><td>NAME</td><td><?php echo $_SESSION['u_title']." ".$_SESSION['u_fullname']; ?></td></tr>
             <tr><td>USERNAME</td><td><?php echo $_SESSION['u_username']; ?></td></tr>
-            <tr><td>PASSWORD</td><td><a href='#'>Change Password</a></td></tr>
             <tr><td>POSITION</td><td><?php echo $_SESSION['u_position']; ?></td></tr>
             <tr><td>PHONE NUMBER</td><td><?php echo $_SESSION['u_phone']; ?></td></tr>
             <tr><td>ADDRESS</td><td><?php echo $_SESSION['u_ad']; ?></td></tr>

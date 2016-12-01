@@ -5,7 +5,13 @@
     header("Location: sm_pinfo.php");
   } else if ($_SESSION['u_position']=="admin"){
     header("Location: admin.php?page=edit");
-  }}
+  } else if ($_SESSION['u_position']=="delivery man") {
+    header("Location: delivery.php");
+  } else if ($_SESSION['u_position']=="accountant") {
+    header("Location: sm_salesdata.php");
+  }
+
+}
 ?>
 <html lang="en">
 <head>

@@ -1,4 +1,65 @@
-<?php session_start() ?>
+<?php
+session_start();
+require_once('connect.php');
+if(isset($_POST['page'])) {
+  $_SESSION['c_title'] = $_POST["Title"];
+  $_SESSION['c_fname'] = $_POST["First_Name"];
+  $_SESSION['c_lname'] = $_POST["Last_Name"];
+  $_SESSION['c_bday'] = $_POST["Birthday_Day"];
+  $_SESSION['c_bmonth'] = $_POST["Birthday_Month"];
+  $_SESSION['c_byear'] = $_POST["Birthday_Year"];
+  $_SESSION['c_email'] = $_POST["Email_Id"];
+  $_SESSION['c_mobile'] = $_POST["Mobile_Number"];
+  $_SESSION['c_address'] = $_POST["Address"];
+  $_SESSION['c_city'] = $_POST["City"];
+  $_SESSION['c_zipcode'] = $_POST["Zip_Code"];
+  $_SESSION['c_country'] = $_POST["Country"];
+  $_SESSION['c_page'] = $_POST['page'];
+  //echo "wait for confirmation";
+} else if(isset($_POST['confirm'])){
+  //echo "add";
+
+  $q="SELECT COUNT(*) FROM customer_address";
+  $result=$mysqli->query($q);
+  $row=$result->fetch_array();
+  $count=$row[0];
+  $count=$count+1;
+  //echo $count;
+
+  $q="INSERT INTO customer (CUSTOMER_TITLE,CUSTOMER_FNAME,CUSTOMER_LNAME,CUSTOMER_DOB,CUSTOMER_ADDRESS,CUSTOMER_EMAIL,CUSTOMER_PHONE)
+  VALUES ('".$_SESSION['c_title']."','".$_SESSION['c_fname']."','".$_SESSION['c_lname']."','"
+  .$_SESSION['c_byear']."-".$_SESSION['c_bmonth']."-".$_SESSION['c_bday']."',".$count.",'".$_SESSION['c_email']."','".$_SESSION['c_mobile']."')";
+  //echo $q;
+  $result=$mysqli->query($q);
+  if(!$result){
+    $_SESSION['dup_cus'] = "<h2 style='color:white; text-align:center;'>Registration failed. Error: ".$mysqli->error."</h2>" ;
+    //break;
+  } else {
+    $q="INSERT INTO customer_address (ADDRESS,CITY,COUNTRY,ZIPCODE)
+    VALUES ('".$_SESSION['c_address']."','".$_SESSION['c_city']."','".$_SESSION['c_country']."','".$_SESSION['c_zipcode']."')";
+    //echo $q;
+    $result=$mysqli->query($q);
+
+    $q="SELECT CUSTOMER_ID FROM customer WHERE CUSTOMER_FNAME='".$_SESSION['c_fname']."' AND CUSTOMER_LNAME='".$_SESSION['c_lname']."'";
+    $result=$mysqli->query($q);
+    $row=$result->fetch_array();
+    $_SESSION['customer_id']=$row[0];
+    $_SESSION['customer_title']=$_SESSION['c_title'];
+    $_SESSION['customer_fname']=$_SESSION['c_fname'];
+    $_SESSION['customer_lname']=$_SESSION['c_lname'];
+    //echo $_SESSION['customer_id'];
+  }
+}
+/*echo "Test: <br>";
+if(!isset($_POST['page']) && !isset($_POST['confirm'])){
+  echo " no page no confirm <br>";
+} else if(isset($_POST['page']) && !isset($_POST['confirm'])){
+  echo " has page no confirm ";
+}
+if(isset($_SESSION['dup_cus'])){
+  echo $_SESSION['dup_cus']."<br>";
+}*/
+?>
 <html lang="en">
 <head>
   <link rel="icon" href="images/iconn.gif" />
@@ -23,7 +84,7 @@
     <div class="staff">
       <?php
         if(isset($_SESSION['u_fullname'])){
-          echo "<h4>".$_SESSION['u_fullname']." , ".$_SESSION['u_username']."</h4>";
+          echo "<h4>".$_SESSION['u_fullname']." , ".$_SESSION['u_position']."</h4>";
         }
        ?>
     </div>
@@ -36,8 +97,6 @@
         <li><a href="sm_salesdata.php">Sales Data</a></li>
         <li><a href="sm_pinfo.php">Salesman Personal Info</a></li>
         <li><a href="logout.php">Logout</a></li>
-
-
       </ul>
       <div class="clear"></div>
     </nav>
@@ -53,208 +112,100 @@
 
 <br>
 <body>
+<?php
+  if(!isset($_POST['page']) && !isset($_POST['confirm'])){
+?>
 <h3>CUSTOMER REGISTRATION FORM</h3><br>
-<form action="add_customer.php" method="POST">
-
+<form action="sm_cusreg.php" method="POST">
 <table class="add_table" align="center" cellpadding = "10">
-
-<!----- First Name ---------------------------------------------------------->
-<tr>
-<td>FIRST NAME</td>
-<td><input type="text" name="First_Name" maxlength="30"/>
-(max 30 characters a-z and A-Z)
-</td>
-</tr>
-
-<!----- Last Name ---------------------------------------------------------->
-<tr>
-<td>LAST NAME</td>
-<td><input type="text" name="Last_Name" maxlength="30"/>
-(max 30 characters a-z and A-Z)
-</td>
-</tr>
-
-<!----- Date Of Birth -------------------------------------------------------->
-<tr>
-<td>DATE OF BIRTH</td>
-
+<tr><td>FIRST NAME</td><td><input type="text" name="First_Name" maxlength="30"/>(max 30 characters a-z and A-Z)</td></tr>
+<tr><td>LAST NAME</td><td><input type="text" name="Last_Name" maxlength="30"/>(max 30 characters a-z and A-Z)</td></tr>
+<tr><td>DATE OF BIRTH</td>
 <td>
 <select name="Birthday_Day" id="Birthday_Day">
 <option value="-1">Day:</option>
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-
-<option value="4">4</option>
-<option value="5">5</option>
-<option value="6">6</option>
-<option value="7">7</option>
-<option value="8">8</option>
-<option value="9">9</option>
-<option value="10">10</option>
-<option value="11">11</option>
-<option value="12">12</option>
-
-<option value="13">13</option>
-<option value="14">14</option>
-<option value="15">15</option>
-<option value="16">16</option>
-<option value="17">17</option>
-<option value="18">18</option>
-<option value="19">19</option>
-<option value="20">20</option>
-<option value="21">21</option>
-
-<option value="22">22</option>
-<option value="23">23</option>
-<option value="24">24</option>
-<option value="25">25</option>
-<option value="26">26</option>
-<option value="27">27</option>
-<option value="28">28</option>
-<option value="29">29</option>
-<option value="30">30</option>
-
-<option value="31">31</option>
+<?php
+  for($i=1;$i<=31;$i=$i+1){
+    echo "<option value='".$i."'>".$i."</option>";
+  }
+?>
 </select>
 
 <select id="Birthday_Month" name="Birthday_Month">
 <option value="-1">Month:</option>
-<option value="January">Jan</option>
-<option value="February">Feb</option>
-<option value="March">Mar</option>
-<option value="April">Apr</option>
-<option value="May">May</option>
-<option value="June">Jun</option>
-<option value="July">Jul</option>
-<option value="August">Aug</option>
-<option value="September">Sep</option>
-<option value="October">Oct</option>
-<option value="November">Nov</option>
-<option value="December">Dec</option>
+<option value="1">Jan</option>
+<option value="2">Feb</option>
+<option value="3">Mar</option>
+<option value="4">Apr</option>
+<option value="5">May</option>
+<option value="6">Jun</option>
+<option value="7">Jul</option>
+<option value="8">Aug</option>
+<option value="9">Sep</option>
+<option value="10">Oct</option>
+<option value="11">Nov</option>
+<option value="12">Dec</option>
 </select>
 
 <select name="Birthday_Year" id="Birthday_Year">
-
 <option value="-1">Year:</option>
-<option value="2012">2012</option>
-<option value="2011">2011</option>
-<option value="2010">2010</option>
-<option value="2009">2009</option>
-<option value="2008">2008</option>
-<option value="2007">2007</option>
-<option value="2006">2006</option>
-<option value="2005">2005</option>
-<option value="2004">2004</option>
-<option value="2003">2003</option>
-<option value="2002">2002</option>
-<option value="2001">2001</option>
-<option value="2000">2000</option>
-
-<option value="1999">1999</option>
-<option value="1998">1998</option>
-<option value="1997">1997</option>
-<option value="1996">1996</option>
-<option value="1995">1995</option>
-<option value="1994">1994</option>
-<option value="1993">1993</option>
-<option value="1992">1992</option>
-<option value="1991">1991</option>
-<option value="1990">1990</option>
-
-<option value="1989">1989</option>
-<option value="1988">1988</option>
-<option value="1987">1987</option>
-<option value="1986">1986</option>
-<option value="1985">1985</option>
-<option value="1984">1984</option>
-<option value="1983">1983</option>
-<option value="1982">1982</option>
-<option value="1981">1981</option>
-<option value="1980">1980</option>
+<?php
+  for($i=2012;$i>1900;$i=$i-1){
+    echo "<option value='".$i."'>".$i."</option>";
+  }
+?>
 </select>
 </td>
 </tr>
 <!---title-->
-<tr>
-<td>TITLE</td>
-<td>
-MR. <input type="radio" name="Title" value="Mr." />
-MS. <input type="radio" name="Title" value="Ms." />
-</td>
-</tr>
+<tr><td>TITLE</td><td>
+    MR. <input type="radio" name="Title" value="Mr." />
+    MS. <input type="radio" name="Title" value="Ms." />
+</td></tr>
 
-
-<!----- Email Id ---------------------------------------------------------->
-<tr>
-<td>EMAIL Address</td>
-<td><input type="text" name="Email_Id" maxlength="100" /></td>
-</tr>
-
-<!----- Mobile Number ---------------------------------------------------------->
-<tr>
-<td>MOBILE NUMBER</td>
-<td>
-<input type="text" name="Mobile_Number" maxlength="10" />
-(10 digit number)
-</td>
-</tr>
-
-<!----- Gender ----------------------------------------------------------->
-<!--
-<tr>
-<td>GENDER</td>
-<td>
-Male <input type="radio" name="Gender" value="Male" />
-Female <input type="radio" name="Gender" value="Female" />
-</td>
-</tr>
--->
-<!----- Address ---------------------------------------------------------->
-<tr>
-<td>ADDRESS <br /><br /><br /></td>
-<td><textarea name="Address" rows="4" cols="30"></textarea></td>
-</tr>
-
-<!----- City ---------------------------------------------------------->
-<tr>
-<td>CITY</td>
-<td><input type="text" name="City" maxlength="30" />
-(max 30 characters a-z and A-Z)
-</td>
-</tr>
-
-<!----- Pin Code ---------------------------------------------------------->
-<tr>
-<td>ZIP CODE</td>
-<td><input type="text" name="Zip_Code" maxlength="6" />
-(6 digit number)
-</td>
-</tr>
-
-<!----- State ---------------------------------------------------------->
-<tr>
-<td>COUNTRY</td>
-<td><input type="text" name="Country" maxlength="30" />
-(max 30 characters a-z and A-Z)
-</td>
-</tr>
-
-
-
-
-
-<!----- Submit and Reset ------------------------------------------------->
-<input type="hidden" name="page" value="adduser">
-<tr>
-<td colspan="2" align="center">
+<tr><td>EMAIL Address</td><td><input type="text" name="Email_Id" maxlength="100" /></td></tr>
+<tr><td>MOBILE NUMBER</td><td><input type="text" name="Mobile_Number" maxlength="10" />(10 digit number)</td></tr>
+<tr><td>ADDRESS <br /><br /><br /></td><td><textarea name="Address" rows="4" cols="30"></textarea></td></tr>
+<tr><td>CITY</td><td><input type="text" name="City" maxlength="30" />(max 30 characters a-z and A-Z)</td></tr>
+<tr><td>ZIP CODE</td><td><input type="text" name="Zip_Code" maxlength="6" />(6 digit number)</td></tr>
+<tr><td>COUNTRY</td><td><input type="text" name="Country" maxlength="30" />(max 30 characters a-z and A-Z)</td></tr>
+<tr><td colspan="2" align="center">
+  <input type="hidden" name="page" value="adduser">
   <input type="submit" class="button-2" value="Submit">
   <input type="reset" class="button-2" value="Reset">
 </td>
 </tr>
 </table>
-
 </form>
+<?php } else if (isset($_POST['page']) && !isset($_POST['confirm'])) { ?>
+  <h3>CUSTOMER REGISTRATION CONFIRMATION</h3><br>
+  <form action="sm_cusreg.php" method="POST">
+  <table class="add_table" align="center" cellpadding = "10">
+  <tr><td>FIRST NAME</td><td><?php echo $_SESSION['c_fname']; ?></td></tr>
+  <tr><td>LAST NAME</td><td><?php echo $_SESSION['c_lname']; ?></td></tr>
+  <tr><td>DATE OF BIRTH</td><td><?php echo $_SESSION['c_byear']."-".$_SESSION['c_bmonth']."-".$_SESSION['c_bday']; ?></td>
+  <tr><td>TITLE</td><td><?php echo $_SESSION['c_title']; ?></td></tr>
+  <tr><td>EMAIL Address</td><td><?php echo $_SESSION['c_email']; ?></td></tr>
+  <tr><td>MOBILE NUMBER</td><td><?php echo $_SESSION['c_mobile']; ?></td></tr>
+  <tr><td>ADDRESS <br /><br /><br /></td><td><?php echo $_SESSION['c_address']; ?></td></tr>
+  <tr><td>CITY</td><td><?php echo $_SESSION['c_city']; ?></td></tr>
+  <tr><td>ZIP CODE</td><td><?php echo $_SESSION['c_zipcode']; ?></td></tr>
+  <tr><td>COUNTRY</td><td><?php echo $_SESSION['c_country']; ?></td></tr>
+  <tr><td colspan="2" align="center">
+    <!--<input type="hidden" name="confirm" value="adduser">-->
+    <input class="button-2" type="submit" name="confirm" value="Confirm">
+    <a class="button-2" href="javascript:history.go(-1)">Edit</a>
+  </td></tr>
+  </table>
+  </form>
+<?php } else if (isset($_POST['confirm']) && isset($_SESSION['dup_cus'])) {
+  echo $_SESSION['dup_cus'];
+  unset($_SESSION['dup_cus']);
+} else if (isset($_POST['confirm']) && !isset($_SESSION['dup_cus'])) {
+  echo "<h2 style='color:white; text-align:center;'>Customer Registration Success</h2><br>" ;
+  if(isset($_SESSION['model'])){ header("Location: check_customer.php");}
+}
+?>
 
 </body>
 </html>

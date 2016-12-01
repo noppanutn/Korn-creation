@@ -39,6 +39,7 @@
         <li <?php if($page=='edit'){echo "class='current'";} ?>><a href="admin.php?page=edit">Edit Car</a></li>
         <li <?php if($page=='adds'){echo "class='current'";} ?>><a href="admin.php?page=adds">Add Staff</a></li>
         <li <?php if($page=='show'){echo "class='current'";} ?>><a href="admin.php?page=show">List Staffs</a></li>
+
         <li><a href="logout.php">Logout</a></li>
 
 
@@ -49,6 +50,7 @@
 
 <br>
 <body>
+
 <h3 style="font-size:35px; line-height:42px; color:white; font-weight:bold; font-family: 'Open Sans Condensed', sans-serif;
 text-align: center;">Admin Page</h3><br>
   <?php
@@ -128,6 +130,7 @@ text-align: center;">Admin Page</h3><br>
       echo "</div>";
 
     }
+
 
   ?>
 

@@ -58,7 +58,7 @@ if(isset($_POST['First_Name'])){
     <div class="staff">
       <?php
         if(isset($_SESSION['u_fullname'])){
-          echo "<h4>".$_SESSION['u_fullname']." , ".$_SESSION['u_username']."</h4>";
+          echo "<h4>".$_SESSION['u_fullname']." , ".$_SESSION['u_position']."</h4>";
         }
        ?>
     </div>
