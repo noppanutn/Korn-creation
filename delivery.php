@@ -1,6 +1,17 @@
 <?php
 session_start();
 require_once('connect.php');
+
+if(!isset($_SESSION['u_position'])){
+    $_SESSION['nop']='<center><warn>You do not have permission. Please log in.</warn></center>';
+    header('Location: login.php');
+  }else{
+    if(!($_SESSION['u_position']=='delivery man')){
+        $_SESSION['nop']='<center><warn>You do not have permission. Please log in.</warn></center>';
+        header('Location: login.php');
+      }
+  }
+
 $listby="name";
 if(isset($_POST['choice'])){
   $listby=$_POST['choice'];

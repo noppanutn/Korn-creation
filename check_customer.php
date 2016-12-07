@@ -5,6 +5,16 @@
 //echo "model: ".$_POST['model'];
   //$_SESSION['manufacturer'] = $_POST['manufacturer'];
 
+  if(!isset($_SESSION['u_position'])){
+      $_SESSION['nop']='<center><warn>You do not have permission. Please log in.</warn></center>';
+      header('Location: login.php');
+    }else{
+      if(!($_SESSION['u_position']=='salesman')){
+          $_SESSION['nop']='<center><warn>You do not have permission. Please log in.</warn></center>';
+          header('Location: login.php');
+        }
+    }
+
   if(!isset($_SESSION['model'])){
   $_SESSION['model'] = $_POST['model'];
   $_SESSION['in_color'] = $_POST['in_color'];
@@ -143,12 +153,14 @@
       <tr><td>CAR MANUFACTURER</td><td><?php echo $_SESSION['manufacturername']; ?></td></tr>
       <tr><td>CAR MODEL</td><td><?php echo $_SESSION['modelname']; ?></td></tr>
       <tr><td>MODEL PRICE</td><td><?php echo $_SESSION['price1']; ?></td></tr>
+      <tr><td colspan="2"><?php echo "<img height='200px' src='images/car".$_SESSION['model'].".jpg'"; ?></td></tr>
       <tr><td>CAR Interior Color</td><td><?php echo $_SESSION['incolorname']; ?></td></tr>
       <tr><td>Interior Color PRICE</td><td><?php echo $_SESSION['price2']; ?></td></tr>
       <tr><td>CAR Exterior Color</td><td><?php echo $_SESSION['excolorname']; ?></td></tr>
       <tr><td>Exterior Color PRICE</td><td><?php echo $_SESSION['price3']; ?></td></tr>
       <tr><td>CAR Wheel</td><td><?php echo $_SESSION['wheelname']; ?></td></tr>
       <tr><td>Wheel PRICE</td><td><?php echo $_SESSION['price4']; ?></td></tr>
+      <tr><td colspan="2"><?php echo "<img height='200px' src='images/wheel".$_SESSION['wheel'].".jpg'"; ?></td></tr>
       <tr><td>CAR Insurance</td><td><?php echo $_SESSION['insurance']; ?></td></tr>
       <tr><td>Additional Charges</td><td>30%</td></tr>
       <tr><td>TOTAL PRICE</td><td><?php echo $_SESSION['total']; ?></td></tr>

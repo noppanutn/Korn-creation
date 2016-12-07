@@ -1,6 +1,18 @@
 <?php
 session_start();
 require_once('connect.php');
+
+if(!isset($_SESSION['u_position'])){
+    $_SESSION['nop']='<center><warn>You do not have permission. Please log in.</warn></center>';
+    header('Location: login.php');
+  }else{
+    if(!($_SESSION['u_position']=='salesman')){
+        $_SESSION['nop']='<center><warn>You do not have permission. Please log in.</warn></center>';
+        header('Location: login.php');
+      }
+  }
+
+
 if(isset($_POST['page'])) {
   $_SESSION['c_title'] = $_POST["Title"];
   $_SESSION['c_fname'] = $_POST["First_Name"];

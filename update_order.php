@@ -1,7 +1,16 @@
 <?php
   require_once('connect.php');
   session_start();
-
+/*
+  if(!isset($_SESSION['u_position'])){
+      $_SESSION['nop']='<center><warn>You do not have permission. Please log in.</warn></center>';
+      header('Location: login.php');
+    }else{
+      if(!($_SESSION['u_position']=='salesman')){
+          $_SESSION['nop']='<center><warn>You do not have permission. Please log in.</warn></center>';
+          header('Location: login.php');
+        }
+    }*/
   if($_POST['page']=="order"){
   $_SESSION['model'] = $_POST['model'];
   $_SESSION['in_color'] = $_POST['in_color'];
@@ -81,8 +90,15 @@
   $orderid = $_SESSION['orderid'];
   $q = "UPDATE car_order SET DEPOSIT_PAYMENT_STATUS = STR_TO_DATE('$payyear-$paymonth-$payday', '%Y-%m-%d')
   WHERE CAR_ORDER_ID = $orderid";
-  echo $q;
+  //echo $q;
   $result = $mysqli->query($q);
+  if(!$result){
+    //echo $mysqli->error;
+    //break; break;
+    $_SESSION['error_date'] = $mysqli->error;
+    header('Location:edit_order.php?orderid='.$orderid);
+    break;
+  }
   header('Location: sm_salesdata.php');
 } else if ($_POST['page']=="shipping"){
   $_SESSION['Agree'] = $_POST['Agree'];
@@ -131,7 +147,7 @@
         <ul class="menu">
           <li><a href="index.html" class="home"><img src="images/home.jpg" alt=""></a></li>
           <li><a href="sm_cusreg.php">New Customer</a></li>
-          <li class="current"><a href="sm_customization.php">Customization</a></li>
+          <li><a href="sm_customization.php">Customization</a></li>
           <li><a href="sm_salesdata.php">Sales Data</a></li>
           <li><a href="sm_pinfo.php">Salesman Personal Info</a></li>
           <li><a href="logout.php">Logout</a></li>
@@ -160,20 +176,23 @@
       <tr><td>CUSTOMER FIRST NAME</td><td><?php echo $customer['CUSTOMER_FNAME']; ?></td></tr>
       <tr><td>CUSTOMER LAST NAME</td><td><?php echo $customer['CUSTOMER_LNAME']; ?></td></tr>
       <tr><td>STAFF NAME</td><td><?php echo $_SESSION['u_fullname']; ?></td></tr>
+      <tr><td>Deal Date</td><td><?php echo $timesql; ?></td></tr>
       <tr><td>CAR MANUFACTURER</td><td><?php echo $manufacturername; ?></td></tr>
       <tr><td>CAR MODEL</td><td><?php echo $modelname; ?></td></tr>
-      <tr><td>Deal Date</td><td><?php echo $timesql; ?></td></tr>
+
       <!--
 	  <tr><td>Payment Status</td><td><?php echo $payyear."-".$paymonth."-".$payday; ?></td></tr>
 	  <tr><td>Shipping Status</td><td><?php echo $shipping; ?></td></tr>
   -->
       <tr><td>MODEL PRICE</td><td><?php echo $price1; ?></td></tr>
+      <tr><td colspan="2"><?php echo "<img height='200px' src='images/car".$_POST['model'].".jpg'"; ?></td></tr>
       <tr><td>CAR Interior Color</td><td><?php echo $incolorname; ?></td></tr>
       <tr><td>Interior Color PRICE</td><td><?php echo $price2; ?></td></tr>
       <tr><td>CAR Exterior Color</td><td><?php echo $excolorname; ?></td></tr>
       <tr><td>Exterior Color PRICE</td><td><?php echo $price3; ?></td></tr>
       <tr><td>CAR Wheel</td><td><?php echo $wheelname; ?></td></tr>
       <tr><td>Wheel PRICE</td><td><?php echo $price4; ?></td></tr>
+      <tr><td colspan="2"><?php echo "<img height='200px' src='images/wheel".$_SESSION['wheel'].".jpg'"; ?></td></tr>
       <tr><td>CAR Insurance</td><td><?php echo $insurance; ?></td></tr>
       <tr><td>Additional Charges</td><td>30%</td></tr>
       <tr><td>TOTAL PRICE</td><td><?php echo $total; ?></td></tr>

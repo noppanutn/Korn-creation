@@ -207,11 +207,23 @@ body, input, button {
     min-height: 0;
   }
 }
+/* warning statement */
+warn{
+  font-size: 2rem;
+  color: red;
+}
 </style></head>
 
 <body>
   <div class="login">
   <div class="heading">
+    <?php
+    if(isset($_SESSION['nop'])){
+      echo $_SESSION['nop'];
+      session_destroy();
+    }
+    ?>
+
     <h2>Sign in</h2>
     <?php
       if(isset($_SESSION['message'])){

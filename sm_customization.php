@@ -3,6 +3,17 @@ session_start();
 require_once('connect.php');
 unset($_SESSION['model']);
 ?>
+<?php
+if(!isset($_SESSION['u_position'])){
+    $_SESSION['nop']='<center><warn>You do not have permission. Please log in.</warn></center>';
+    header('Location: login.php');
+  }else{
+    if(!($_SESSION['u_position']=='salesman')){
+        $_SESSION['nop']='<center><warn>You do not have permission. Please log in.</warn></center>';
+        header('Location: login.php');
+      }
+  }
+?>
 <html lang="en">
 <head>
   <link rel="icon" href="images/iconn.gif" />
@@ -35,6 +46,24 @@ $(document).ready(function()
   });
  });
 </script>
+<script>
+function myFunction() {
+    var x = document.getElementById("sofloww").value;
+    document.getElementById("pic").style.display = 'table-cell';
+    //document.getElementById("pic").colspan = 2;
+    document.getElementById("pic").innerHTML = "You selected: <img src='images/car" + x + ".jpg' height='300px'>";
+
+}
+
+function myWheel() {
+    var x = document.getElementById("wheel").value;
+    document.getElementById("wpic").style.display = 'table-cell';
+    //document.getElementById("pic").colspan = 2;
+    document.getElementById("wpic").innerHTML = "You selected: <img src='images/wheel" + x + ".jpg' height='200px'>";
+
+}
+</script>
+
 <style type="text/css">
   h3{  font-size:35px; line-height:42px; color:red; font-weight:bold; font-family: 'Open Sans Condensed', sans-serif;
   text-align: center; text-decoration: underline }
@@ -111,10 +140,12 @@ $(document).ready(function()
         </tr>
         <tr>
           <td>Car Model</td>
-          <td><select  id="soflow" name="model" class="model">
+          <td><select  id="sofloww" name="model" class="model" onchange="myFunction()">
             <option value='0' selected>--Select a car model--</option>
           </select></td>
         </tr>
+
+        <tr><td id="pic" colspan="2" style="display: none; padding: 10 10 10 30;"></td></tr>
 
         <tr>
           <td>Interior Color</td>
@@ -152,7 +183,7 @@ $(document).ready(function()
 
         <tr>
           <td>Wheel</td>
-          <td><select id="soflow" name="wheel">
+          <td><select id="wheel" name="wheel" onchange=myWheel()>
             <option value='0' selected>--Select a exterior Color--</option>
             <?php
             $q='select * from wheel;';
@@ -166,6 +197,8 @@ $(document).ready(function()
             ?>
           </select></td>
         </tr>
+
+        <tr><td id="wpic" colspan="2" style="display: none; padding: 10 100 10 100;"></td></tr>
 
         <tr>
           <td>Insurance</td>

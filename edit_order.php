@@ -1,6 +1,17 @@
 <?php
 session_start();
 require_once('connect.php');
+
+if(!isset($_SESSION['u_position'])){
+    $_SESSION['nop']='<center><warn>You do not have permission. Please log in.</warn></center>';
+    header('Location: login.php');
+  }else{
+    if(!($_SESSION['u_position']=='salesman')and!($_SESSION['u_position']=='accountant')){
+        $_SESSION['nop']='<center><warn>You do not have permission. Please log in.</warn></center>';
+        header('Location: login.php');
+      }
+  }
+
 ?>
 <html lang="en">
 <head>
@@ -33,6 +44,23 @@ $(document).ready(function()
    });
   });
  });
+</script>
+<script>
+function myFunction() {
+    var x = document.getElementById("sofloww").value;
+    document.getElementById("pic").style.display = 'table-cell';
+    //document.getElementById("pic").colspan = 2;
+    document.getElementById("pic").innerHTML = "You selected: <img src='images/car" + x + ".jpg' height='300px'>";
+
+}
+
+function myWheel() {
+    var x = document.getElementById("wheel").value;
+    document.getElementById("wpic").style.display = 'table-cell';
+    //document.getElementById("pic").colspan = 2;
+    document.getElementById("wpic").innerHTML = "You selected: <img src='images/wheel" + x + ".jpg' height='200px'>";
+
+}
 </script>
 <style type="text/css">
   h3{  font-size:35px; line-height:42px; color:red; font-weight:bold; font-family: 'Open Sans Condensed', sans-serif;
@@ -78,7 +106,7 @@ $(document).ready(function()
               <li><a href="index.html" class="home"><img src="images/home.jpg" alt=""></a></li>
               <li><a href="sm_cusreg.php">New Customer</a></li>
               <li><a href="sm_customization.php">Customization</a></li>
-              <li class="current"><a href="sm_salesdata.php">Sales Data</a></li>
+              <li><a href="sm_salesdata.php">Sales Data</a></li>
               <li><a href="sm_pinfo.php">Salesman Personal Info</a></li>
               <li><a href="logout.php">Logout</a></li>
             </ul>
@@ -126,7 +154,7 @@ $(document).ready(function()
             $row=$result->fetch_array();
             echo $row[1];
            ?> was previously selected.</p>
-          <select id="soflow" name="manufacturer" class="manufacturer">
+          <select id="soflow" name="manufacturer" class="manufacturer" >
           <option value='0' selected>Select Car Manufacturer</option>
           <?php
             $q="SELECT * FROM car_model GROUP BY MANUFACTURER";
@@ -149,11 +177,11 @@ $(document).ready(function()
           $row=$result->fetch_array();
           echo $row[2];
          ?> was previously selected.</p>
-        <select  id="soflow" name="model" class="model">
+        <select  id="sofloww" name="model" class="model" onchange="myFunction()">
           <option value='0' selected>--Select a car model--</option>
         </select></td>
 </tr>
-
+<tr><td id="pic" colspan="2" style="display: none; padding: 10 10 10 30;"></td></tr>
 <tr>
 <td>Interior Color</td>
 <td><select  id="soflow" name="in_color" >
@@ -202,7 +230,7 @@ if($result=$mysqli->query($q)){
 
 <tr>
 <td>Wheel</td>
-<td><select id="soflow" name="wheel">
+<td><select id="wheel" name="wheel" onchange="myWheel()">
 
 <option value='0'>--Select a exterior Color--</option>
 <?php
@@ -222,6 +250,9 @@ if($result=$mysqli->query($q)){
 ?>
 </select></td>
 </tr>
+
+<tr><td id="wpic" colspan="2" style="display: none; padding: 10 100 10 100;"></td></tr>
+
 <tr>
 <td>Insurance</td>
 <td><select id="soflow" name="insurance">
@@ -249,7 +280,8 @@ if($result=$mysqli->query($q)){
       <table class="add_table" align="center" cellpadding = "10">
         <form action="update_order.php" method="post">
           <div id="select_box">
-            <br><h3>Edit Car Order</h3><br>
+            <br><h3>Update payment status</h3><br>
+            <?php if(isset($_SESSION['error_date'])){ echo "<h3>".$_SESSION['error_date']."</h3><br>"; unset($_SESSION['error_date']);} ?>
             <tr>
            <td>Payment status</td>
 

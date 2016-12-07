@@ -1,6 +1,16 @@
 <?php
 session_start();
 require_once('connect.php');
+
+if(!isset($_SESSION['u_position'])){
+    $_SESSION['nop']='<center><warn>You do not have permission. Please log in.</warn></center>';
+    header('Location: login.php');
+  }else{
+    if(!($_SESSION['u_position']=='salesman')){
+        $_SESSION['nop']='<center><warn>You do not have permission. Please log in.</warn></center>';
+        header('Location: login.php');
+      }
+  }
 ?>
 <html lang="en">
 <head>

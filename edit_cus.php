@@ -1,6 +1,16 @@
 <?php session_start();
 require_once('connect.php');
 
+if(!isset($_SESSION['u_position'])){
+    $_SESSION['nop']='<center><warn>You do not have permission. Please log in.</warn></center>';
+    header('Location: login.php');
+  }else{
+    if(!($_SESSION['u_position']=='salesman')){
+        $_SESSION['nop']='<center><warn>You do not have permission. Please log in.</warn></center>';
+        header('Location: login.php');
+      }
+  }
+
 if(isset($_POST['First_Name'])){
   $title = $_POST['Title'];
   $fname = $_POST['First_Name'];
@@ -66,7 +76,7 @@ if(isset($_POST['First_Name'])){
     <nav>
       <ul class="menu">
         <li><a href="index.html" class="home"><img src="images/home.jpg" alt=""></a></li>
-        <li class="current"><a href="sm_cusreg.php">New Customer</a></li>
+        <li><a href="sm_cusreg.php">New Customer</a></li>
         <li><a href="sm_customization.php">Customization</a></li>
         <li><a href="sm_salesdata.php">Sales Data</a></li>
         <li><a href="sm_pinfo.php">Salesman Personal Info</a></li>
